@@ -5,7 +5,11 @@ var slm = require('gulp-slm');
 
 gulp.task('build', function() {
   return gulp.src('main.slm')
-    .pipe(slm())
+    .pipe(slm({
+      locals: {
+        data: 100
+      }
+    }))
     .pipe(gulp.dest('.'));
 });
 
