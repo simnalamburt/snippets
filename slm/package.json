@@ -1,0 +1,7 @@
+{ "name": "slm-tutorial"
+, "version": "0.0.0"
+, "description": "Tutorial for node.js html template - slm"
+, "devDependencies":
+  { "slm": "^0.1.1"
+  }
+}
