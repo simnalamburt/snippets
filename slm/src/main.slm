@@ -1,0 +1,8 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    title = this.title
+  body
+    h1 = this.title
+    p = this.text
