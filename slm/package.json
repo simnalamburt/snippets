@@ -2,6 +2,7 @@
 , "version": "0.0.0"
 , "description": "Tutorial for node.js html template - slm"
 , "devDependencies":
-  { "slm": "^0.1.1"
+  { "gulp": "^3.8.7"
+  , "gulp-slm": "0.0.0"
   }
 }
