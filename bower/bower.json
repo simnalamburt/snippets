@@ -1,0 +1,5 @@
+{ "name": "bower-test"
+, "dependencies":
+  { "jquery": "^2.1.1"
+  }
+}
