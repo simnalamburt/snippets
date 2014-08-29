@@ -1,4 +1,4 @@
-Language study
+Simple Experiments
 ========
 
-My programming language study homeworks
+My code snippets
