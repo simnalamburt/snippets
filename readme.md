@@ -1,4 +1,4 @@
-Simple Experiments
+Snippets
 ========
 
 My code snippets
