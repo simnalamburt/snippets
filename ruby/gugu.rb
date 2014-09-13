@@ -1,12 +1,19 @@
-for x in 2..9
-  for y in 1..9
-    printf '%d*%d = %-2d   ', x, y, x*y
+for a in 1..9
+  for b in 2..5
+    printf "%d * %d = %2d\t", b, a, a*b
+  end
+  puts ''
+end
+puts ''
+for a in 1..9
+  for b in 6..9
+    printf "%d * %d = %2d\t", b, a, a*b
   end
   puts ''
 end
 
-=begin
 
+__END__
 1.  루비에서 반복문 도는 N가지 방법
 
     ```
@@ -32,5 +39,3 @@ end
     puts "#{a} + #{b} = #{a+b}"
     printf "%d + %d = %d\n", a, b, a+b
     ```
-
-=end
