@@ -3,7 +3,7 @@
 
 int main()
 {
-  char input[1001], delims[101], *p[1001], *temp;
+  char input[1001], delims[101], *tokens[1001], *temp;
   int w;
 
   for(w=0; w<1001; w++)
@@ -15,12 +15,12 @@ int main()
   gets(input);
 
   int i, j, k=1;
-  p[0]=&input[0];
+  tokens[0]=&input[0];
   for(i=0; i<1000; i++)
   {
     for(j=0; j<100; j++)
     {
-      if(input[i]==delims[j]){input[i]='0'; p[k]=&input[i+1]; k++; break;}
+      if(input[i]==delims[j]){input[i]='0'; tokens[k]=&input[i+1]; k++; break;}
     }
   }
 
@@ -38,14 +38,14 @@ int main()
       temp = 0;
       while(1)
       {
-        if(*p[i]>*p[j] && *p[i]-*p[j]!=32){temp=p[i]; p[i]=p[j]; p[j]=temp; break;}
-        else if(*p[i]<*p[j] && *p[j]-*p[i]!=32){break;}
-        else if(*p[i]=='0' && *p[j]!='0'){break;}
-        else if(*p[j]=='0' && *p[i]!='0'){temp=p[i]; p[i]=p[j]; p[j]=temp; break;}
+        if(*tokens[i]>*tokens[j] && *tokens[i]-*tokens[j]!=32){temp=tokens[i]; tokens[i]=tokens[j]; tokens[j]=temp; break;}
+        else if(*tokens[i]<*tokens[j] && *tokens[j]-*tokens[i]!=32){break;}
+        else if(*tokens[i]=='0' && *tokens[j]!='0'){break;}
+        else if(*tokens[j]=='0' && *tokens[i]!='0'){temp=tokens[i]; tokens[i]=tokens[j]; tokens[j]=temp; break;}
         else if(i==j){break;}
-        else{p[i]=p[i]+1; p[j]=p[j]+1; q++;}
+        else{tokens[i]=tokens[i]+1; tokens[j]=tokens[j]+1; q++;}
       }
-      p[i]=p[i]-q; p[j]=p[j]-q;
+      tokens[i]=tokens[i]-q; tokens[j]=tokens[j]-q;
     }
   }
 
@@ -59,9 +59,9 @@ int main()
   int t=0;
   for(i=0; i<k-1; i++)
   {
-    for(j=0; *(p[i]+j)!='0'; j++)
+    for(j=0; *(tokens[i]+j)!='0'; j++)
     {
-      output[t]= *(p[i]+j);
+      output[t]= *(tokens[i]+j);
       t++;
     }
     output[t]=' ';
