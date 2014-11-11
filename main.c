@@ -32,33 +32,8 @@ int main(void) {
     }
   }
 
-  char output[1001] = {};
-
-  int t = 0;
-  for (i = 0; i < count-1; ++i) {
-    for (j = 0; *(tokens[i] + j) != 0; ++j) {
-      output[t] = *(tokens[i] + j);
-      ++t;
-    }
-    output[t] = ' ';
-    ++t;
-  }
-
-  t = 0;
-  for (i = 0; i < 1000; ++i) {
-    if (output[i] == ' ') { ++t; }
-    else break;
-  }
-
-  int u = 0, d = 999;
-  for (u = 999; u >= 0; --u) {
-    if (output[u] == 0) { --d; }
-    else break;
-  }
-
-  int e;
-  for (e = t; e < d; ++e) {
-    printf("%c", output[e]);
+  for (i = 0; i < count; ++i) {
+    printf(" %s", tokens[i]);
   }
 
   return 0;
