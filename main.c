@@ -5,7 +5,9 @@
 // If ch is upper-case letter: return lower-case of ch
 //          otherwise        : return ch
 //
-char tolower(char ch) {
+// Homemade tolower() function
+//
+char _tolower(char ch) {
   return 'A' <= ch && ch <= 'Z' ?
     ch - 'A' + 'a' :
     ch;
@@ -13,6 +15,7 @@ char tolower(char ch) {
 
 //
 // Compare strings, ignoring case
+//
 // Homemade strcasecmp() function
 //
 int _strcasecmp(const char* left, const char* right) {
@@ -20,13 +23,13 @@ int _strcasecmp(const char* left, const char* right) {
     *s1 = (const unsigned char *) left,
     *s2 = (const unsigned char *) right;
 
-  while (tolower(*s1) == tolower(*s2++)) {
+  while (_tolower(*s1) == _tolower(*s2++)) {
     if (*s1++ == '\0') {
       return 0;
     }
   }
 
-  return tolower(*s1) - tolower(*--s2);
+  return _tolower(*s1) - _tolower(*--s2);
 }
 
 //
