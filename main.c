@@ -11,8 +11,8 @@ int main(void)
     input[w]='0';
   }
 
-  gets(delims);
-  gets(input);
+  fgets(delims, sizeof delims, stdin);
+  fgets(input, sizeof input, stdin);
 
   int i, j, k=1;
   tokens[0]=&input[0];
