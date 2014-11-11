@@ -6,7 +6,7 @@ int main(void) {
   int w;
 
   for (w = 0; w < 1001; w++) {
-    input[w]='0';
+    input[w]=0;
   }
 
   fgets(delims, sizeof delims, stdin);
@@ -16,12 +16,12 @@ int main(void) {
   tokens[0] = &input[0];
   for (i = 0; i < 1000; ++i) {
     for (j = 0; j < 100; ++j) {
-      if (input[i] == delims[j]) { input[i] = '0'; tokens[k] = &input[i+1]; ++k; break; }
+      if (input[i] == delims[j]) { input[i] = 0; tokens[k] = &input[i+1]; ++k; break; }
     }
   }
 
   for (i = 0; i < 1000; ++i) {
-    if (input[i] == 0) { input[i] = '0'; break; }
+    if (input[i] == 0) { input[i] = 0; break; }
   }
 
 
@@ -32,8 +32,8 @@ int main(void) {
       while (1) {
         if (*tokens[i] > *tokens[j] && *tokens[i] - *tokens[j] != 32) { temp = tokens[i]; tokens[i] = tokens[j]; tokens[j] = temp; break; }
         else if (*tokens[i] < *tokens[j] && *tokens[j] - *tokens[i] != 32) { break; }
-        else if (*tokens[i] == '0' && *tokens[j] != '0') { break; }
-        else if (*tokens[j] == '0' && *tokens[i] != '0') { temp = tokens[i]; tokens[i] = tokens[j]; tokens[j] = temp; break; }
+        else if (*tokens[i] == 0 && *tokens[j] != 0) { break; }
+        else if (*tokens[j] == 0 && *tokens[i] != 0) { temp = tokens[i]; tokens[i] = tokens[j]; tokens[j] = temp; break; }
         else if (i == j) { break; }
         else { tokens[i] = tokens[i] + 1; tokens[j] = tokens[j] + 1; ++q; }
       }
@@ -44,12 +44,12 @@ int main(void) {
   char output[1001];
   int h;
   for (h = 0; h < 1000; ++h) {
-    output[h] = '0';
+    output[h] = 0;
   }
 
   int t = 0;
   for (i = 0; i < k-1; ++i) {
-    for (j = 0; *(tokens[i] + j) != '0'; ++j) {
+    for (j = 0; *(tokens[i] + j) != 0; ++j) {
       output[t] = *(tokens[i] + j);
       ++t;
     }
@@ -65,7 +65,7 @@ int main(void) {
 
   int u = 0, d = 999;
   for (u = 999; u >= 0; --u) {
-    if (output[u] == '0') { --d; }
+    if (output[u] == 0) { --d; }
     else break;
   }
 
