@@ -2,7 +2,7 @@
 
 
 int main(void) {
-  char input[1001], delims[101], *tokens[1001], *temp;
+  char input[1001], delims[101], *tokens[1001];
   int w;
 
   for (w = 0; w < 1001; w++) {
@@ -28,7 +28,7 @@ int main(void) {
   for (i = 0; i < k-2; ++i) {
     for (j = i+1; j < k-1; ++j) {
       int q = 0;
-      temp = 0;
+      char* temp = 0;
       while (1) {
         if (*tokens[i] > *tokens[j] && *tokens[i] - *tokens[j] != 32) { temp = tokens[i]; tokens[i] = tokens[j]; tokens[j] = temp; break; }
         else if (*tokens[i] < *tokens[j] && *tokens[j] - *tokens[i] != 32) { break; }
