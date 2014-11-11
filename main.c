@@ -92,7 +92,10 @@ int main(void) {
   //
   // 출력
   //
-  for (i = 0; i < tokens_count; ++i) {
+  for (i = 0; i < 1; ++i) {
+    printf("%s", tokens[i]);
+  }
+  for (; i < tokens_count; ++i) {
     printf(" %s", tokens[i]);
   }
 
