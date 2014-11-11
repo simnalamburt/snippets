@@ -5,12 +5,15 @@ int main()
 {
   char s[1001], b[101], *p[1001], *temp;
   int w;
+
   for(w=0; w<1001; w++)
   {
     s[w]='0';
   }
+
   gets(b);
   gets(s);
+
   int i, j, k=1;
   p[0]=&s[0];
   for(i=0; i<1000; i++)
@@ -45,12 +48,14 @@ int main()
       p[i]=p[i]-q; p[j]=p[j]-q;
     }
   }
+
   char output[1001];
   int h;
   for(h=0; h<1000; h++)
   {
     output[h]='0';
   }
+
   int t=0;
   for(i=0; i<k-1; i++)
   {
@@ -62,22 +67,26 @@ int main()
     output[t]=' ';
     t++;
   }
+
   t=0;
   for(i=0; i<1000; i++)
   {
     if(output[i]==' '){t++;}
     else break;
   }
+
   int u=0, d=999;
   for(u=999; u>=0; --u)
   {
     if(output[u]=='0'){--d;}
     else break;
   }
+
   int e;
   for(e=t; e<d; e++)
   {
     printf("%c", output[e]);
   }
+
   return 0;
 }
