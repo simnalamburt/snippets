@@ -76,11 +76,6 @@ int main(void) {
   const int tokens_count = _count;
 
   //
-  // 할 연산이 없을경우 빠른 return
-  //
-  if (tokens_count < 1) return 0;
-
-  //
   // tokens 퀵소트
   //
   qsort(tokens, tokens_count, sizeof tokens[0], cmp);
@@ -88,11 +83,13 @@ int main(void) {
   //
   // 출력
   //
-  for (i = 0; i < 1; ++i) {
-    printf("%s", tokens[i]);
-  }
-  for (; i < tokens_count; ++i) {
-    printf(" %s", tokens[i]);
+  if (tokens_count > 0) {
+    for (i = 0; i < 1; ++i) {
+      printf("%s", tokens[i]);
+    }
+    for (; i < tokens_count; ++i) {
+      printf(" %s", tokens[i]);
+    }
   }
   putchar('\n');
 
