@@ -79,6 +79,11 @@ int main(void) {
   const int tokens_count = _count;
 
   //
+  // 할 연산이 없을경우 빠른 return
+  //
+  if (tokens_count < 1) return 0;
+
+  //
   // tokens 들 사전순으로 배열
   //
   for (i = 0; i < tokens_count - 1; ++i) {
