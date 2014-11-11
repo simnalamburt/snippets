@@ -3,30 +3,30 @@
 
 int main()
 {
-  char s[1001], b[101], *p[1001], *temp;
+  char input[1001], b[101], *p[1001], *temp;
   int w;
 
   for(w=0; w<1001; w++)
   {
-    s[w]='0';
+    input[w]='0';
   }
 
   gets(b);
-  gets(s);
+  gets(input);
 
   int i, j, k=1;
-  p[0]=&s[0];
+  p[0]=&input[0];
   for(i=0; i<1000; i++)
   {
     for(j=0; j<100; j++)
     {
-      if(s[i]==b[j]){s[i]='0'; p[k]=&s[i+1]; k++; break;}
+      if(input[i]==b[j]){input[i]='0'; p[k]=&input[i+1]; k++; break;}
     }
   }
 
   for(i=0;i<1000;i++)
   {
-    if(s[i]==0) {s[i]='0'; break;}
+    if(input[i]==0) {input[i]='0'; break;}
   }
 
 
