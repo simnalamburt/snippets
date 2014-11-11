@@ -94,6 +94,7 @@ int main(void) {
   for (; i < tokens_count; ++i) {
     printf(" %s", tokens[i]);
   }
+  putchar('\n');
 
   return 0;
 }
