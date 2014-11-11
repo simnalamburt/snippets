@@ -14,9 +14,10 @@ int main(void) {
       if (input[i] == delims[j]) { input[i] = 0; tokens[k] = &input[i+1]; ++k; break; }
     }
   }
+  const int count = k;
 
-  for (i = 0; i < k-2; ++i) {
-    for (j = i+1; j < k-1; ++j) {
+  for (i = 0; i < count-2; ++i) {
+    for (j = i+1; j < count-1; ++j) {
       int q = 0;
       char* temp = 0;
       while (1) {
@@ -34,7 +35,7 @@ int main(void) {
   char output[1001] = {};
 
   int t = 0;
-  for (i = 0; i < k-1; ++i) {
+  for (i = 0; i < count-1; ++i) {
     for (j = 0; *(tokens[i] + j) != 0; ++j) {
       output[t] = *(tokens[i] + j);
       ++t;
