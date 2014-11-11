@@ -1,6 +1,37 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+//
+// If ch is upper-case letter: return lower-case of ch
+//          otherwise        : return ch
+//
+char tolower(char ch) {
+  return 'A' <= ch && ch <= 'Z' ?
+    ch - 'A' + 'a' :
+    ch;
+}
+
+//
+// Compare strings, ignoring case
+// Homemade strcasecmp() function
+//
+int _strcasecmp(const char* left, const char* right) {
+  const unsigned char
+    *s1 = (const unsigned char *) left,
+    *s2 = (const unsigned char *) right;
+
+  while (tolower(*s1) == tolower(*s2++)) {
+    if (*s1++ == '\0') {
+      return 0;
+    }
+  }
+
+  return tolower(*s1) - tolower(*--s2);
+}
+
+//
+// main()
+//
 int main(void) {
   int i, j;
 
@@ -19,7 +50,7 @@ int main(void) {
     for (j = 0; delims[j]; ++j) {
       if (input[i] != delims[j]) continue;
 
-      input[i] = 0;
+      input[i] = '\0';
     }
   }
   const int input_size = i - 1; // '\n' 제외
@@ -47,19 +78,14 @@ int main(void) {
   //
   // tokens 들 사전순으로 배열
   //
-  for (i = 0; i < tokens_count - 2; ++i) {
-    for (j = i+1; j < tokens_count - 1; ++j) {
-      int q = 0;
-      char* temp = 0;
-      while (true) {
-        if (*tokens[i] > *tokens[j] && *tokens[i] - *tokens[j] != 32) { temp = tokens[i]; tokens[i] = tokens[j]; tokens[j] = temp; break; }
-        else if (*tokens[i] < *tokens[j] && *tokens[j] - *tokens[i] != 32) { break; }
-        else if (*tokens[i] == 0 && *tokens[j] != 0) { break; }
-        else if (*tokens[j] == 0 && *tokens[i] != 0) { temp = tokens[i]; tokens[i] = tokens[j]; tokens[j] = temp; break; }
-        else if (i == j) { break; }
-        else { tokens[i] = tokens[i] + 1; tokens[j] = tokens[j] + 1; ++q; }
-      }
-      tokens[i] = tokens[i] - q; tokens[j] = tokens[j] - q;
+  for (i = 0; i < tokens_count - 1; ++i) {
+    for (j = i+1; j < tokens_count; ++j) {
+      if (_strcasecmp(tokens[i], tokens[j]) <= 0) continue;
+
+      char* temp;
+      temp = tokens[i];
+      tokens[i] = tokens[j];
+      tokens[j] = temp;
     }
   }
 
