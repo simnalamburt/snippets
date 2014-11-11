@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 //
@@ -14,22 +15,18 @@ char _tolower(char ch) {
 }
 
 //
-// Compare strings, ignoring case
+// Compare (*left) and (*right), ignoring case
 //
-// Homemade strcasecmp() function
-//
-int _strcasecmp(const char* left, const char* right) {
+int cmp(const void* left, const void* right) {
   const unsigned char
-    *s1 = (const unsigned char *) left,
-    *s2 = (const unsigned char *) right;
+    *s1 = *(const unsigned char **) left,
+    *s2 = *(const unsigned char **) right;
 
-  while (_tolower(*s1) == _tolower(*s2++)) {
-    if (*s1++ == '\0') {
-      return 0;
-    }
+  for (; _tolower(*s1) == _tolower(*s2); ++s1, ++s2) {
+    if (*s1 == '\0') { return 0; }
   }
 
-  return _tolower(*s1) - _tolower(*--s2);
+  return _tolower(*s1) - _tolower(*s2);
 }
 
 //
@@ -84,18 +81,9 @@ int main(void) {
   if (tokens_count < 1) return 0;
 
   //
-  // tokens 들 사전순으로 배열
+  // tokens 퀵소트
   //
-  for (i = 0; i < tokens_count - 1; ++i) {
-    for (j = i+1; j < tokens_count; ++j) {
-      if (_strcasecmp(tokens[i], tokens[j]) <= 0) continue;
-
-      char* temp;
-      temp = tokens[i];
-      tokens[i] = tokens[j];
-      tokens[j] = temp;
-    }
-  }
+  qsort(tokens, tokens_count, sizeof tokens[0], cmp);
 
   //
   // 출력
