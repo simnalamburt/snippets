@@ -2,12 +2,7 @@
 
 
 int main(void) {
-  char input[1001], delims[101], *tokens[1001];
-  int w;
-
-  for (w = 0; w < 1001; w++) {
-    input[w]=0;
-  }
+  char input[1001] = {}, delims[101], *tokens[1001];
 
   fgets(delims, sizeof delims, stdin);
   fgets(input, sizeof input, stdin);
@@ -19,11 +14,6 @@ int main(void) {
       if (input[i] == delims[j]) { input[i] = 0; tokens[k] = &input[i+1]; ++k; break; }
     }
   }
-
-  for (i = 0; i < 1000; ++i) {
-    if (input[i] == 0) { input[i] = 0; break; }
-  }
-
 
   for (i = 0; i < k-2; ++i) {
     for (j = i+1; j < k-1; ++j) {
@@ -41,11 +31,7 @@ int main(void) {
     }
   }
 
-  char output[1001];
-  int h;
-  for (h = 0; h < 1000; ++h) {
-    output[h] = 0;
-  }
+  char output[1001] = {};
 
   int t = 0;
   for (i = 0; i < k-1; ++i) {
