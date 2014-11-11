@@ -3,7 +3,7 @@
 
 int main()
 {
-  char input[1001], b[101], *p[1001], *temp;
+  char input[1001], delims[101], *p[1001], *temp;
   int w;
 
   for(w=0; w<1001; w++)
@@ -11,7 +11,7 @@ int main()
     input[w]='0';
   }
 
-  gets(b);
+  gets(delims);
   gets(input);
 
   int i, j, k=1;
@@ -20,7 +20,7 @@ int main()
   {
     for(j=0; j<100; j++)
     {
-      if(input[i]==b[j]){input[i]='0'; p[k]=&input[i+1]; k++; break;}
+      if(input[i]==delims[j]){input[i]='0'; p[k]=&input[i+1]; k++; break;}
     }
   }
 
