@@ -9,7 +9,7 @@ auto main() -> int
 {
   using namespace std;
 
-  cout << "비밀번호를 입력해보렴 : " << end;
+  cout << "비밀번호를 입력해보렴 : " << flush;
   int a;
   cin >> a;
   int b = hipass(a);
