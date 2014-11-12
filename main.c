@@ -48,9 +48,10 @@ int main(void) {
   //
   for (i = 0; input[i]; ++i) {
     for (j = 0; delims[j]; ++j) {
-      if (input[i] != delims[j]) continue;
-
-      input[i] = '\0';
+      if (input[i] == delims[j]) {
+        input[i] = '\0';
+        break;
+      }
     }
   }
   const int input_size = i - 1; // '\n' 제외
