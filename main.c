@@ -59,7 +59,6 @@ int main(void) {
       }
     }
   }
-  const int input_size = i - 1; // '\n' 제외
 
   //
   // 빈 token 제외하기
