@@ -1,5 +1,0 @@
-# Ignore binaries
-*
-!.gitignore
-!Makefile
-!*.cpp
