@@ -1,4 +1,4 @@
-프로그래밍 연습
+Programming Practice
 ========
 
 SNU 4190.103A
