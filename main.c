@@ -83,13 +83,12 @@ int main(void) {
   //
   // 출력
   //
-  if (tokens_count > 0) {
-    for (i = 0; i < 1; ++i) {
-      printf("%s", tokens[i]);
-    }
-    for (; i < tokens_count; ++i) {
-      printf(" %s", tokens[i]);
-    }
+  i = 0;
+  for (; i < tokens_count && i < 1; ++i) {
+    printf("%s", tokens[i]);
+  }
+  for (; i < tokens_count; ++i) {
+    printf(" %s", tokens[i]);
   }
   putchar('\n');
 
