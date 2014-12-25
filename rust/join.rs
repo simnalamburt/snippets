@@ -1,4 +1,5 @@
+use std::os::args;
+
 fn main() {
-    let a = ["a", "b", "c"];
-    println!("{}", a.connect(" "));
+    println!("\"{}\"", args().connect(" "));
 }
