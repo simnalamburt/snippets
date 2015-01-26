@@ -2,9 +2,9 @@ use std::rand;
 use std::rand::distributions::{IndependentSample, Range};
 
 fn main() {
-    let range = Range::new(0i, 100i);
-    let mut rng = rand::task_rng();
-    let mut counter = 0u;
+    let range = Range::new(0is, 100);
+    let mut rng = rand::thread_rng();
+    let mut counter = 0us;
 
     loop {
         counter += 1;

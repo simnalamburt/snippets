@@ -1,11 +1,11 @@
-use std::fmt::Show;
+use std::fmt::Debug;
 
 trait ValuePrelude<T> {
     fn equal(&self, T);
     fn typename(&self) -> &'static str;
 }
 
-impl<T: PartialEq + Show> ValuePrelude<T> for T {
+impl<T: PartialEq + Debug> ValuePrelude<T> for T {
     fn equal(&self, rhs: T) {
         assert_eq!(*self, rhs)
     }
@@ -22,7 +22,7 @@ trait RefPrelude<T> {
     fn typename(&self) -> &'static str;
 }
 
-impl<'a, T: PartialEq + Show> RefPrelude<T> for &'a T {
+impl<'a, T: PartialEq + Debug> RefPrelude<T> for &'a T {
     fn equal(&self, rhs: &T) {
         assert_eq!(*self, rhs)
     }
@@ -35,8 +35,8 @@ impl<'a, T: PartialEq + Show> RefPrelude<T> for &'a T {
 }
 
 fn main() {
-    let a:(int, int) = (1i, 1i);
+    let a = (1is, 1is);
 
-    println!("{}", a);
-    println!("{}", a.typename()); //=> (int, int)
+    println!("{:?}", a);
+    println!("{:?}", a.typename()); //=> (int, int)
 }

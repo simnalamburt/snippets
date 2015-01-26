@@ -7,5 +7,5 @@ fn main() {
 
     let lhs: [u8; 8] = unsafe { transmute(lhs) };
     let rhs: [u8; 8] = unsafe { transmute(rhs) };
-    println!("{} != {}", lhs, rhs);
+    println!("{:?} != {:?}", lhs, rhs);
 }

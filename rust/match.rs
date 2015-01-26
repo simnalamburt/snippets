@@ -1,5 +1,3 @@
-#![feature(globs)]
-
 use std::io::stdio::println;
 use self::Name::*;
 

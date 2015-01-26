@@ -1,4 +1,4 @@
-#![feature(simd, globs, macro_rules)]
+#![feature(simd)]
 #![allow(non_camel_case_types)]
 
 use std::mem::*;
@@ -12,11 +12,11 @@ struct ThreeByte(u8, u16);
 struct FiveByte(u32, u8);
 
 macro_rules! inspect {
-    ($($T:ty);*;) => ({
-        println!(" {:19} | size_of | min_align_of | align_of | size_of >= min_align_of", "");
-        println!("-{:-<19}-+-{:-<7}-+-{:-<12}-+-{:-<8}-+-{:-<23}-", "", "", "", "", "");
+    ($($T:tt;)*) => ({
+        println!(" {:24} | size_of | min_align_of | align_of | size_of >= min_align_of", "");
+        println!("-{:-<24}-+-{:-<7}-+-{:-<12}-+-{:-<8}-+-{:-<23}-", "", "", "", "", "");
         $(
-            println!(" {:19} | {:7} | {:12} | {:8} | {}", stringify!($T),
+            println!(" {:24} | {:7} | {:12} | {:8} | {}", stringify!($T),
                 size_of::<$T>(), min_align_of::<$T>(), align_of::<$T>(),
                 size_of::<$T>() >= min_align_of::<$T>());
         )*
@@ -30,7 +30,7 @@ fn main() {
         f32x3_no_c;
         f32x3_no_simd;
     };
-    
+
     inspect! {
         u8;
         OneByte;

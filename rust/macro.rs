@@ -1,5 +1,3 @@
-#![feature(macro_rules)]
-
 macro_rules! m {
     { $($exp:expr);* } => ({
         $(

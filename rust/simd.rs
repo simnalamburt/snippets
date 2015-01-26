@@ -1,7 +1,7 @@
 #![feature(simd)]
 
 #[simd]
-#[deriving(Copy, Show)]
+#[derive(Copy, Debug)]
 #[allow(non_camel_case_types)]
 struct f32x3(f32, f32, f32);
 
@@ -11,5 +11,5 @@ fn main() {
 
     let c = a - b;
 
-    println!("{}", c);
+    println!("{:?}", c);
 }
