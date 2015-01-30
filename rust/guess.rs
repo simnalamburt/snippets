@@ -1,4 +1,6 @@
-use std::io;
+#![feature(core, io, rand, collections)]
+
+use std::old_io as io;
 use std::rand;
 use std::rand::distributions::{IndependentSample, Range};
 
