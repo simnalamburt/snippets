@@ -1,4 +1,4 @@
-#![feature(core, io, rand, collections)]
+#![feature(io, rand, collections)]
 
 use std::old_io as io;
 use std::rand;
