@@ -1,8 +1,9 @@
-#![feature(io, rand, collections)]
+#![feature(io)]
+
+extern crate rand;
 
 use std::old_io as io;
-use std::rand;
-use std::rand::distributions::{IndependentSample, Range};
+use rand::distributions::{IndependentSample, Range};
 
 fn main() {
     println!("Guess the number!");
@@ -14,8 +15,8 @@ fn main() {
 
         let line = io::stdin().read_line().ok().expect("Failed to read line");
         let input: usize = match line[].trim().parse() {
-            Some(num) => num,
-            None      => {
+            Ok(num) => num,
+            Err(_) => {
                 println!("Please input a number!");
                 continue;
             }

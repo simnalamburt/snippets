@@ -1,7 +1,8 @@
+#![feature(core)]
+
 trait Typename<T> { fn typename(&self) -> &'static str; }
 
 impl<T> Typename<T> for T {
-    #[allow(unstable)]
     fn typename(&self) -> &'static str {
         unsafe { *std::intrinsics::get_tydesc::<T>() } .name
     }

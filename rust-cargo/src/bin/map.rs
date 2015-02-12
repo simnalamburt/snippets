@@ -1,4 +1,4 @@
-#![allow(unstable)]
+#![feature(collections)]
 
 use std::collections::*;
 

@@ -1,5 +1,8 @@
-use std::rand;
-use std::rand::distributions::{IndependentSample, Range};
+#![feature(core)]
+
+extern crate rand;
+
+use rand::distributions::{IndependentSample, Range};
 
 fn main() {
     let range = Range::new(0is, 100);

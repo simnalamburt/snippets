@@ -3,7 +3,7 @@
 fn main() {
     println!("ok");
 
-    (|:| {
+    (|&:| {
         println!("ok");
 
         return;

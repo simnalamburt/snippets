@@ -1,4 +1,4 @@
-#![feature(simd)]
+#![feature(core, simd)]
 #![allow(non_camel_case_types)]
 
 use std::mem::*;

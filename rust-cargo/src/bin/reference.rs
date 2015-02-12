@@ -1,6 +1,6 @@
-#![feature(core, io)]
+#![feature(io)]
 
-use std::old_io as io;
+use std::old_io::stdin;
 
 fn main() {
     let res_a = '가';
@@ -13,10 +13,10 @@ fn main() {
     println!("");
     println!("a, b, c 셋 중 하나를 입력하세요.");
     print!("ptr: ");
-
     let mut ptr: &char;
 
-    for line in io::stdin().lock().lines() {
+    let mut stdin = stdin();
+    for line in stdin.lock().lines() {
         ptr = match line.unwrap()[].trim_right() {
             "a" => &res_a,
             "b" => &res_b,

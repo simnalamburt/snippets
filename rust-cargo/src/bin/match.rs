@@ -1,6 +1,13 @@
-use std::io::stdio::println;
+#![feature(plugin, io)]
+#![plugin(rand_macros)]
+
+extern crate rand;
+
+use std::old_io::stdio::println;
+use rand::random;
 use self::Name::*;
 
+#[derive_Rand]
 enum Name {
     Hyeon,
     Newnyang,
@@ -11,7 +18,7 @@ enum Name {
 }
 
 fn main() {
-    println(match Newnyang {
+    println(match random::<Name>() {
         Hyeon => "김젼",
         Newnyang => "뉴냥",
         P => "포비아",
