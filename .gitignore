@@ -1,2 +1,5 @@
 a.out
+node_modules
 *.pyc
+.crystal
+nimcache
