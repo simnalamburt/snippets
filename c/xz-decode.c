@@ -20,11 +20,10 @@ int main(void)
   FILE *outfile = fopen("input", "w");
 
   lzma_stream strm = LZMA_STREAM_INIT;
-  if (lzma_auto_decoder(&strm, UINT64_MAX, LZMA_CONCATENATED) != LZMA_OK) {
-    error("lzma_auto_decoder()");
+  if (lzma_stream_decoder(&strm, UINT64_MAX, LZMA_CONCATENATED) != LZMA_OK) {
+    error("lzma_stream_decoder()");
   }
 
-  strm.next_in = inbuf;
   strm.next_out = outbuf;
   strm.avail_out = sizeof outbuf;
 
