@@ -1,4 +1,4 @@
-#![feature(core, io)]
+#![feature(core, old_io)]
 
 extern crate core;
 

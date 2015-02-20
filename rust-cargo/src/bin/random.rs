@@ -1,5 +1,3 @@
-#![feature(core)]
-
 extern crate rand;
 
 use rand::distributions::{IndependentSample, Range};

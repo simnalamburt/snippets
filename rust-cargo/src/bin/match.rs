@@ -1,4 +1,4 @@
-#![feature(plugin, io)]
+#![feature(plugin, old_io)]
 #![plugin(rand_macros)]
 
 extern crate rand;

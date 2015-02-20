@@ -1,4 +1,4 @@
-#![feature(simd, slicing_syntax)]
+#![feature(simd)]
 
 #[simd]
 #[derive(Debug)]
