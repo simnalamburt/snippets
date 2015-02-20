@@ -2,28 +2,24 @@
 
 extern crate core;
 
-use std::old_io as io;
+use std::old_io::stdin;
 
 fn main() {
     print!("Type any string: ");
 
-    let input = io::stdin().read_line().ok().expect("Failed to read line");
-    let input = input[].trim();
+    let input = &stdin().read_line().unwrap()[..];
+    let input = input.trim();
 
-    let count = {
-        use core::str::StrExt;
-
-        input.char_len()
-    };
+    let count = core::str::StrExt::char_len(input);
 
     print!("{:>30} :", "input.char_at()");
-    for x in range(0us, count) {
+    for x in range(0, count) {
         print!(" {}", input.char_at(x));
     }
     println!("");
 
     print!("{:>30} :", "input.char_at_reverse()");
-    for x in range(0us, count) {
+    for x in range(0, count) {
         print!(" {}", input.char_at_reverse(x));
     }
     println!("");

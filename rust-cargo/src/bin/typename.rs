@@ -1,8 +1,8 @@
 #![feature(core)]
 
-trait Typename<T> { fn typename(&self) -> &'static str; }
+trait Typename { fn typename(&self) -> &'static str; }
 
-impl<T> Typename<T> for T {
+impl<T> Typename for T {
     fn typename(&self) -> &'static str {
         unsafe { *std::intrinsics::get_tydesc::<T>() } .name
     }
@@ -11,8 +11,8 @@ impl<T> Typename<T> for T {
 fn main() {
     let mut obj = Group;
 
-    let a = (1i32, "Hello, world!");
-    let b = [1us, 2, 3, 4, 5];
+    let a = (1, "Hello, world!");
+    let b = [1, 2, 3, 4, 5];
     let c = "Good world";
     let d = &mut obj;
 

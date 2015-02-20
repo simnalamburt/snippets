@@ -8,13 +8,13 @@ use rand::distributions::{IndependentSample, Range};
 fn main() {
     println!("Guess the number!");
 
-    let secret = Range::new(0us, 10000).ind_sample(&mut rand::thread_rng());
+    let secret = Range::new(0usize, 10000).ind_sample(&mut rand::thread_rng());
     loop {
         println!("");
         print!("Please input your guess: ");
 
         let line = io::stdin().read_line().ok().expect("Failed to read line");
-        let input: usize = match line[].trim().parse() {
+        let input: usize = match line[..].trim().parse() {
             Ok(num) => num,
             Err(_) => {
                 println!("Please input a number!");

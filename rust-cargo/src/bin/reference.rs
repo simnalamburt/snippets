@@ -17,7 +17,7 @@ fn main() {
 
     let mut stdin = stdin();
     for line in stdin.lock().lines() {
-        ptr = match line.unwrap()[].trim_right() {
+        ptr = match line.unwrap()[..].trim_right() {
             "a" => &res_a,
             "b" => &res_b,
             "c" => &res_c,
