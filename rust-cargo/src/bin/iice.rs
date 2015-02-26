@@ -1,12 +1,15 @@
+#![feature(old_io)]
 #![allow(unreachable_code)]
+
+use std::old_io::stdio::println;
 
 /// Immediately-invoked closure expression
 fn main() {
-    println!("ok");
+    println("First");
     (|| {
-        println!("ok");
+        println("Second");
         return;
-        panic!();
+        println("Unreachable!");
     })();
-    println!("ok");
+    println("Third");
 }
