@@ -1,8 +1,6 @@
-#![feature(old_io)]
-
 extern crate rand;
 
-use std::old_io as io;
+use std::io::stdin;
 use rand::distributions::{IndependentSample, Range};
 
 fn main() {
@@ -13,7 +11,8 @@ fn main() {
         println!("");
         print!("Please input your guess: ");
 
-        let line = io::stdin().read_line().ok().expect("Failed to read line");
+        let mut line = String::new();
+        stdin().read_line(&mut line).unwrap();
         let input: usize = match line[..].trim().parse() {
             Ok(num) => num,
             Err(_) => {

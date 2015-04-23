@@ -1,7 +1,7 @@
 #![feature(simd)]
 
 #[simd]
-#[derive(Copy, Debug)]
+#[derive(Clone, Copy, Debug)]
 #[allow(non_camel_case_types)]
 struct f32x3(f32, f32, f32);
 

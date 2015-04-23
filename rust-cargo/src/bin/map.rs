@@ -5,7 +5,7 @@ use std::collections::*;
 struct Group;
 
 /// Custom trait to interface `HashMap` and `VecMap`.
-trait Map<K, Q: ?Sized, V> : ::std::ops::IndexMut<K, Output=V> {
+trait Map<K, Q: ?Sized, V> {
     /// Interface of `HashMap` and `VecMap`'s `insert` function.
     fn insert(&mut self, K, V) -> Option<V>;
     /// Interface of `HashMap` and `VecMap`'s `get_mut` function.

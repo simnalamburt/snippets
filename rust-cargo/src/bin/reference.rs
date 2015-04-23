@@ -1,6 +1,4 @@
-#![feature(old_io)]
-
-use std::old_io::stdin;
+use std::io::{stdin, BufRead};
 
 fn main() {
     let res_a = '가';

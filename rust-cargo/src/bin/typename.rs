@@ -4,7 +4,7 @@ trait Typename { fn typename(&self) -> &'static str; }
 
 impl<T> Typename for T {
     fn typename(&self) -> &'static str {
-        unsafe { *std::intrinsics::get_tydesc::<T>() } .name
+        unsafe { std::intrinsics::type_name::<T>() }
     }
 }
 

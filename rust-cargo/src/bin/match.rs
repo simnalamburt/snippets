@@ -1,24 +1,19 @@
-#![feature(plugin, old_io)]
+#![feature(plugin, custom_derive)]
 #![plugin(rand_macros)]
 
 extern crate rand;
 
-use std::old_io::stdio::println;
+use std::io::{stdout, Write};
 use rand::random;
-use self::Name::*;
 
 #[derive_Rand]
-enum Name {
-    Hyeon,
-    Newnyang,
-    P,
-    Sgkim,
-    Sgm,
-    Gallen,
-}
+enum Name { Hyeon, Newnyang, P, Sgkim, Sgm, Gallen }
 
 fn main() {
-    println(match random::<Name>() {
+    use self::Name::*;
+    fn println(msg: &str) { stdout().write_all(msg.as_bytes()).unwrap() }
+
+    println(match random() {
         Hyeon => "김젼",
         Newnyang => "뉴냥",
         P => "포비아",

@@ -1,10 +1,11 @@
-#![feature(old_io)]
 #![allow(unreachable_code)]
 
-use std::old_io::stdio::println;
+use std::io::{stdout, Write};
 
 /// Immediately-invoked closure expression
 fn main() {
+    fn println(msg: &str) { stdout().write_all(msg.as_bytes()).unwrap() }
+
     println("First");
     (|| {
         println("Second");
