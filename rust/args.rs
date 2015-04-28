@@ -1,5 +1,3 @@
-#![feature(env)]
-
 use std::env::args;
 
 fn main() {

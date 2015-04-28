@@ -1,5 +1,3 @@
-#![feature(env, path)]
-
 use std::env::current_exe;
 
 fn main() {

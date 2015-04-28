@@ -13,7 +13,7 @@ fn main() {
     print!("ptr: ");
     let mut ptr: &char;
 
-    let mut stdin = stdin();
+    let stdin = stdin();
     for line in stdin.lock().lines() {
         ptr = match line.unwrap()[..].trim_right() {
             "a" => &res_a,
