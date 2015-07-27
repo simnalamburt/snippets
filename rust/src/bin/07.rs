@@ -1,3 +1,5 @@
+#![allow(unused_variables)]
+
 //! Basic (2)
 //!
 //! - Name hiding
