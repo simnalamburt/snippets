@@ -1,3 +1,5 @@
+#![allow(unused_variables)]
+
 fn main() {
     let list = Vec::<i32>::new();
     // 05.rs:2:9: 2:13 warning: unused variable: `list`, #[warn(unused_variables)] on by default

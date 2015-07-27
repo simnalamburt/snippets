@@ -19,12 +19,12 @@ fn main() {
     // 타입이 생략된 변수선언
     // 함수 호출
     let b = foo();
-    println("b is {}\n", b);
+    println!("b is {}\n", b);
 
     // Nested function
     // 리턴문과 세미콜론없는 expression
 }
 
 fn foo() -> i32 {
-    10 + 20;
+    10 + 20
 }

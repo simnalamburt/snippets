@@ -1,3 +1,5 @@
+#![allow(unused_variables)]
+
 //! 제네릭 (1)
 
 /// ### 에러메세지
@@ -20,5 +22,8 @@
 ///
 /// 그래서 Vec::new() 라고 쓰면, T에 해당하는애가 무엇이 될 지 모르기 때문에 컴파일에러가 난것.
 fn main() {
-    let list = Vec::new();
+    // 아래 문장은 컴파일에러
+    // let list = Vec::new();
+
+    let list = Vec::<i32>::new();
 }

@@ -1,8 +1,10 @@
+#![allow(unused_variables)]
+
 //! 제네릭, 타입추론
 
 fn main() {
-    // ::<i32> 생략가능. 이것이 바로 타입 추론
-    let mut list = Vec::<i32>::new();
+    // ::<i32> 생략가능. 타입 추론
+    let mut list = Vec::new();
 
     list.push(1);
     list.push(2);
