@@ -1,0 +1,4 @@
+[root]
+name = "rust-unstable"
+version = "0.1.0"
+
