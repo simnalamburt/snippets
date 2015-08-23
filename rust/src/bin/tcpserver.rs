@@ -17,11 +17,14 @@ fn main() {
 }
 
 fn handle_client(stream: TcpStream) {
-    use std::io::BufRead; // BufRead trait 사용
+    use std::io::{BufRead, Write}; // BufRead trait 사용
 
+    let mut writer = stream.try_clone().unwrap(); // TODO: 에러처리
     let reader = BufReader::new(stream);
+
     for line in reader.lines() {
         let line = line.unwrap(); // IO 에러일경우 패닉
+        writer.write_all(b"Hello, world!\r\n").unwrap();
         println!("{}", line);
     }
 }
