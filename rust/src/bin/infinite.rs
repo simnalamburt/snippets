@@ -8,6 +8,7 @@
 //!
 //! ##### Tested with
 //! - rustc 1.2.0 (082e47636 2015-08-03)
+//! - rustc 1.3.0 (9a92aaf19 2015-09-15)
 //!
 //! ##### Reference:
 //! - http://rosaec.snu.ac.kr/publish/2014/techmemo/ROSAEC-2014-002.pdf
