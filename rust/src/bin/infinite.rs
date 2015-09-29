@@ -3,7 +3,7 @@
 //!
 //! This example shows how to terminate infinite loop within finite time.
 //!
-//!     $ cargo run --bin infinite --release
+//!     $ rustc -O infinite.rs
 //!     boom!
 //!
 //! ##### Tested with
