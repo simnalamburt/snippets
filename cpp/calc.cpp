@@ -2,19 +2,15 @@
 
 using namespace std;
 
-class ParseError {
+class ParseError : public exception {
   string msg;
 
 public:
-  explicit ParseError(const string &msg) : msg(msg) { }
+  template <typename T>
+  explicit ParseError(const T &msg) : msg(msg) { }
 
-  string what() const { return msg; }
+  const char* what() const noexcept override { return msg.c_str(); }
 };
-
-[[ noreturn ]]
-void error(const char* msg) {
-  throw ParseError(msg);
-}
 
 struct Token {
   static constexpr char number = '8';
