@@ -21,7 +21,7 @@ struct Token {
   double value;
 };
 
-class TokenStream {
+class Parser {
   Token buffer;
   bool buffer_empty = true;
 
