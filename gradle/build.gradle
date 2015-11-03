@@ -1,0 +1,43 @@
+// Dependency
+task hello << {
+  println 'Hello world!'
+}
+
+task intro(dependsOn: hello) << {
+  println "I'm Gradle"
+}
+
+// Lazy Dependency
+task taskX(dependsOn: 'taskY') << {
+  println 'taskX'
+}
+
+task taskY << {
+  println 'taskY'
+}
+
+// Groovy
+task upper << {
+  String someString = 'mY_nAmE'
+  println "  Original: " + someString
+  println "Upper case: " + someString.toUpperCase()
+}
+
+task count << {
+  4.times { print "$it " }
+  print '\n'
+}
+
+// Dynamic tasks
+4.times { counter ->
+  task "task$counter" << {
+    println "I'm task number $counter"
+  }
+}
+task0.dependsOn task2, task3
+
+// Manipulating existing tasks
+task planet << { println 'Hello Earth' }
+planet.doFirst { println 'Hello Venus' }
+planet.doLast { println 'Hello Mars' }
+planet << { println 'Hello Jupiter' }
