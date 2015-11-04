@@ -1,6 +1,14 @@
 // Dependency
 task hello << {
+  // User-defined property
+  ext.myProp = 'ㅇㅅㅇ'
+
   println 'Hello world!'
+}
+
+hello.doLast {
+  // Task property
+  println "Greetings from the $hello.name task. $hello.myProp"
 }
 
 task intro(dependsOn: hello) << {
