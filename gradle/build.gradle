@@ -51,3 +51,16 @@ task planet << { println 'Hello Earth' }
 planet.doFirst { println 'Hello Venus' }
 planet.doLast { println 'Hello Mars' }
 planet << { println 'Hello Jupiter' }
+
+// Configure by DAG
+task distribution << {
+  println "We build the zip with version=$version"
+}
+
+task release(dependsOn: distribution) << {
+  println 'We release now'
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+  version = taskGraph.hasTask(release) ? '1.0' : '1.0-SNAPSHOT'
+}
