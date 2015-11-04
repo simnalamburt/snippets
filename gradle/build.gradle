@@ -1,3 +1,5 @@
+defaultTasks 'hello'
+
 // Dependency
 task hello << {
   // User-defined property
