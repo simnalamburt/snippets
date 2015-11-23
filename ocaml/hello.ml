@@ -1,1 +1,5 @@
-print_endline "Hello, world!";;
+let hello ((): unit): string =
+  "Hello, world!"
+;;
+
+print_endline (hello ())
