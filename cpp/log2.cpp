@@ -16,7 +16,15 @@ static inline uint32_t log2_slow(uint32_t x) {
   return ret;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  if (argc >= 2) {
+    cout << "Type int: ";
+    uint32_t input;
+    cin >> input;
+    cout << log2(input) << endl;
+    return 0;
+  }
+
   auto t1 = high_resolution_clock::now();
 
   for (uint32_t i = 0; i < 100000000; ++i) {
