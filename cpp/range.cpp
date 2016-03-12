@@ -5,9 +5,11 @@
 //     $ clang++ -O3 -std=c++1z range.cpp
 //     $ ./a.out
 //
-//     for()            : 49.1344ms
-//     hyeon::range()   : 62.9569ms
-//     dalgona::range() : 1314.91ms
+//     for()            : 37.5555ms
+//     hyeon::range()   : 37.6976ms
+//     dalgona::range() : 939.455ms
+//
+// Reference: https://twitter.com/simnalamburt/status/708524123660623872
 //
 // ### 이유
 // 1.  불필요한 메모리 alloc이 성능저하의 제일 큰 원인
