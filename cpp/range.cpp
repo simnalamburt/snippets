@@ -5,9 +5,9 @@
 //     $ clang++ -O3 -std=c++1z range.cpp
 //     $ ./a.out
 //
-//     for()            : 37.5555ms
-//     hyeon::range()   : 37.6976ms
-//     dalgona::range() : 939.455ms
+//     for()            : 61.1005ms
+//     hyeon::range()   : 62.5964ms
+//     dalgona::range() : 1216.04ms
 //
 // Reference: https://twitter.com/simnalamburt/status/708524123660623872
 //
@@ -22,30 +22,30 @@
 // No dependency!
 namespace hyeon {
   template<typename T>
-  class Iterator {
-    T _it;
+  struct Iterator {
+    private: T _it;
+    public: const T step;
 
-  public:
-    Iterator(const T& it) : _it(it) { }
+    Iterator(T it, T step) : _it(it), step(step) { }
 
-    bool operator!=(const Iterator<T> &right) const { return **this != *right; }
+    bool operator!=(const Iterator<T> &right) const { return **this < *right; }
     T operator*() const { return _it; }
 
-    Iterator<T>& operator++() { ++_it; return *this; }
+    Iterator<T>& operator++() { _it += step; return *this; }
   };
 
   template<typename T>
   struct Range {
-    const T _begin, _end;
-    Range(T begin, T end) : _begin(begin), _end(end) { }
+    const T _begin, _end, _step;
+    Range(T begin, T end, T step) : _begin(begin), _end(end), _step(step) { }
 
-    Iterator<T> begin() const { return { _begin }; }
-    Iterator<T> end() const { return { _end }; }
+    Iterator<T> begin() const { return { _begin, _step }; }
+    Iterator<T> end() const { return { _end, _step }; }
   };
 
   template<typename T>
-  auto range(T begin, T end) -> Range<T> {
-    return { begin, end };
+  auto range(T begin, T end, T step = 1) -> Range<T> {
+    return { begin, end, step };
   }
 }
 
@@ -85,31 +85,35 @@ auto main() -> int {
   using namespace std;
   using namespace chrono;
   const auto now = high_resolution_clock::now;
+  constexpr uint32_t begin = 23;
+  constexpr uint32_t end = 300000005;
+  constexpr uint32_t step = 3;
 
   const auto t1 = now();
 
-  for (uint32_t i = 0; i < 100000000; ++i) {
+  for (uint32_t i = begin; i < end; i += step) {
     const volatile auto _ = i;
   }
 
   const auto t2 = now();
 
-  for (auto i : hyeon::range(0, 100000000)) {
+  for (auto i : hyeon::range(begin, end, step)) {
     const volatile auto _ = i;
   }
 
   const auto t3 = now();
 
-  for (auto i : dalgona::range(0, 100000000)) {
+  for (auto i : dalgona::range(begin, end, step)) {
     const volatile auto _ = i;
   }
 
   const auto t4 = now();
 
+  const auto ms = [](auto param) { return duration<double>(param).count() * 1000; };
   cout <<
-    "for()            : " << duration<double>(t2 - t1).count() * 1000 << "ms\n"
-    "hyeon::range()   : " << duration<double>(t3 - t2).count() * 1000 << "ms\n"
-    "dalgona::range() : " << duration<double>(t4 - t3).count() * 1000 << "ms\n";
+    "for()            : " << ms(t2 - t1) << "ms\n"
+    "hyeon::range()   : " << ms(t3 - t2) << "ms\n"
+    "dalgona::range() : " << ms(t4 - t3) << "ms\n";
 
   return 0;
 }
