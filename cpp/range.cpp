@@ -16,40 +16,38 @@
 // 2.  Step도 저렇게 구현하지 않아도 됨
 //
 
-#include <chrono>
-#include <iostream>
-
+//
 // No dependency!
+//
 namespace hyeon {
   template<typename T>
-  struct Iterator {
-    private: T _it;
-    public: const T step;
+  class Iterator {
+    T _it;
+  public:
+    const T step;
 
     Iterator(T it, T step) : _it(it), step(step) { }
-
-    bool operator!=(const Iterator<T> &right) const { return **this < *right; }
-    T operator*() const { return _it; }
-
-    Iterator<T>& operator++() { _it += step; return *this; }
+    auto operator!=(const Iterator<T> &right) const { return **this < *right; }
+    auto operator*() const { return _it; }
+    auto operator++() { _it += step; return *this; }
   };
 
   template<typename T>
   struct Range {
     const T _begin, _end, _step;
-    Range(T begin, T end, T step) : _begin(begin), _end(end), _step(step) { }
-
-    Iterator<T> begin() const { return { _begin, _step }; }
-    Iterator<T> end() const { return { _end, _step }; }
+    auto begin() const { return Iterator<T>{ _begin, _step }; }
+    auto end() const { return Iterator<T>{ _end, _step }; }
   };
 
   template<typename T>
-  auto range(T begin, T end, T step = 1) -> Range<T> {
-    return { begin, end, step };
+  auto range(T begin, T end, T step = 1) {
+    return Range<T>{ begin, end, step };
   }
 }
 
+//
 // Dependencies for dalgona::range
+//
 #include <vector>
 #include <type_traits>
 #define DX_MSG_NONINTEGRAL "IntT must be an integral type."
@@ -81,17 +79,21 @@ namespace dalgona
   }
 }
 
+//
+// Benchmark
+//
+#include <chrono>
+#include <iostream>
 auto main() -> int {
   using namespace std;
   using namespace chrono;
-  const auto now = high_resolution_clock::now;
-  constexpr uint32_t begin = 23;
-  constexpr uint32_t end = 300000005;
-  constexpr uint32_t step = 3;
+
+  constexpr auto begin = 23, end = 300000005, step = 3;
+  constexpr auto now = high_resolution_clock::now;
 
   const auto t1 = now();
 
-  for (uint32_t i = begin; i < end; i += step) {
+  for (auto i = begin; i < end; i += step) {
     const volatile auto _ = i;
   }
 
@@ -114,16 +116,4 @@ auto main() -> int {
     "for()            : " << ms(t2 - t1) << "ms\n"
     "hyeon::range()   : " << ms(t3 - t2) << "ms\n"
     "dalgona::range() : " << ms(t4 - t3) << "ms\n";
-
-  return 0;
 }
-
-//{
-//  auto && __range = range_expression ;
-//  for (auto __begin = begin_expr,
-//            __end = end_expr;
-//            __begin != __end; ++__begin) {
-//    range_declaration = *__begin;
-//    loop_statement
-//  }
-//}
