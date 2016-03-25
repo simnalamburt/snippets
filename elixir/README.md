@@ -6,4 +6,6 @@ Elixir
 elixir hello.ex
 
 # Compile
+elixirc hello_module.ex
+elixir -e HelloModule.hello
 ```
