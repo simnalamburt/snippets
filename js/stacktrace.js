@@ -11,3 +11,4 @@ stack.forEach(x => {
 });
 
 // Error.prepareStackTrace=(e,t)=>t;let s;try{s.e}catch(e){s=e.stack;}s.map(x=>x.getFunctionName())
+// Error.prepareStackTrace=(e,t)=>t;let s;try{s.e}catch(e){s=e.stack;}s.map(x=>`${x.getFunctionName()} (${x.getFileName()}:${x.getLineNumber()}:${x.getColumnNumber()})`)
