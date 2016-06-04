@@ -9,3 +9,6 @@ nimcache
 
 /haskell/*
 !/haskell/*.hs
+
+/idris/*
+!/idris/*.idr
