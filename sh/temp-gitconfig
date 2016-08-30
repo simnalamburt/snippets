@@ -1,0 +1,8 @@
+# Use this script like below
+#
+#     source temp-gitconfig
+
+export GIT_COMMITTER_NAME="Hyeon Kim"
+export GIT_AUTHOR_NAME="Hyeon Kim"
+export GIT_COMMITTER_EMAIL="simnalamburt@gmail.com"
+export GIT_AUTHOR_EMAIL="simnalamburt@gmail.com"
