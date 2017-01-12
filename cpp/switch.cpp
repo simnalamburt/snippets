@@ -17,7 +17,7 @@ constexpr auto h(const char* input) {
   }
   return ret;
 }
-auto h(std::string input) { return h(input.c_str()); }
+auto h(const std::string &input) { return h(input.c_str()); }
 
 auto main() -> int {
   using namespace std;
