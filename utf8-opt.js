@@ -38,38 +38,18 @@ function encode(input) {
 //
 // Bench codes
 //
-function printStatus(fn) {
-  switch(%GetOptimizationStatus(fn)) {
-  case 1:   console.log(`\x1b[32m${fn.name}() : optimized\x1b[0m`); return;
-  case 2:   console.log(`\x1b[32m${fn.name}() : not optimized\x1b[0m`); return;
-  case 3:   console.log(`\x1b[32m${fn.name}() : always optimized\x1b[0m`); return;
-  case 4:   console.log(`\x1b[32m${fn.name}() : never optimized\x1b[0m`); return;
-  case 6:   console.log(`\x1b[32m${fn.name}() : maybe deoptimized\x1b[0m`); return;
-  case 7:   console.log(`\x1b[32m${fn.name}() : optimized by TurboFan\x1b[0m`); return;
-  default:  console.log(`\x1b[32m${fn.name}() : unknown optimization status\x1b[0m`); return;
-  }
-}
-function status() {
-  printStatus(encode);
-  printStatus(case1);
-  printStatus(case2);
-  printStatus(case3);
-}
-
 console.log('\x1b[33mTest Result :', encode(0xD788), '\x1b[0m');
 console.log('\x1b[33mExpected    :', [0xED, 0x9E, 0x88], '\x1b[0m');
 
 var i;
 
 console.log();
-status();
 console.log('\x1b[33mWarming up... (1Mops)\x1b[0m');
 for (i = 0; i < 1E6; ++i) {
   encode(
     Math.floor(Math.random() * 0x100) | 0
   );
 }
-status();
 console.log();
 
 console.time('\x1b[33mNormal UTF-8 (10Mops)\x1b[0m');
@@ -93,4 +73,3 @@ console.time('\x1b[33mUTF-8 invalid codepoints (10Mops)\x1b[0m');
 console.timeEnd('\x1b[33mUTF-8 invalid codepoints (10Mops)\x1b[0m');
 
 console.log();
-status();
