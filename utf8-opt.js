@@ -3,19 +3,37 @@
 //
 "use strict";
 
-const h = [0, 192, 224, 240];
+function case0(input) {
+  return [input];
+}
+function case1(input) {
+  return [
+    192 | (input >>> 6),
+    128 | input & 63,
+  ];
+}
+function case2(input) {
+  return [
+    224 | (input >>> 12),
+    128 | (input >>> 6) & 63,
+    128 | input & 63,
+  ];
+}
+function case3(input) {
+  return [
+    240 | (input >>> 18),
+    128 | (input >>> 12) & 63,
+    128 | (input >>> 6) & 63,
+    128 | input & 63,
+  ];
+}
+
 function encode(input) {
   if (!(input === (input|0) && input >= 0 && input < 1114112)) { return []; }
-
-  const cnt = input < 128 ? 0 : input < 2048 ? 1 : input < 65536 ? 2 : 3;
-  const ret = new Array(cnt+1);
-  const head = h[cnt];
-  for (var i = cnt; i > 0; i--) {
-    ret[i] = 128 | input & 63;
-    input >>>= 6;
-  }
-  ret[0] = head | input;
-  return ret;
+  if (input < 128) { return case0(input); }
+  if (input < 2048) { return case1(input); }
+  if (input < 65536) { return case2(input); }
+  return case3(input);
 }
 
 
