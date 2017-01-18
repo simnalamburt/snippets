@@ -4,7 +4,10 @@
 "use strict";
 
 const h = [0, 192, 224, 240];
-function encode_core(input) {
+
+function encode(input) {
+  if (!(input === (input|0) && input >= 0 && input < 1114112)) { return []; }
+
   const cnt = input < 128 ? 0 : input < 2048 ? 1 : input < 65536 ? 2 : 3;
   const ret = new Array(cnt+1);
   const head = h[cnt];
@@ -14,10 +17,6 @@ function encode_core(input) {
   }
   ret[0] = head | input;
   return ret;
-}
-
-function encode(input) {
-  return input === (input|0) && input >= 0 && input < 1114112 ? encode_core(input) : []
 }
 
 
