@@ -37,25 +37,31 @@ function printStatus(fn) {
   }
 }
 
-printStatus(u);
-
 console.log('\x1b[33mTest:', u(55176), '\x1b[0m');
-console.log('\x1b[33mWarming up...\x1b[0m');
+
+console.log();
+printStatus(u);
+console.log('\x1b[33mWarming up... (1Mops)\x1b[0m');
 for (let i = 0; i < 1000000; i++) {
   const val = Math.floor(Math.random() * 0x100);
   u(val);
 }
+printStatus(u);
+console.log();
 
-console.time('\x1b[33mNormal UTF-8 1000000\x1b[0m');
-for (let i = 0; i < 1000000; i++) {
+console.time('\x1b[33mNormal UTF-8 (10Mops)\x1b[0m');
+for (let i = 0; i < 10000000; i++) {
   const val = Math.floor(Math.random() * 0x110000);
   u(val);
 }
-console.timeEnd('\x1b[33mNormal UTF-8 1000000\x1b[0m');
+console.timeEnd('\x1b[33mNormal UTF-8 (10Mops)\x1b[0m');
 
-console.time('\x1b[33mUTF-8 invalid codepoints 1000000\x1b[0m');
-for (let i = 0; i < 1000000; i++) {
+console.time('\x1b[33mUTF-8 invalid codepoints (10Mops)\x1b[0m');
+for (let i = 0; i < 10000000; i++) {
   const val = Math.floor(Math.random() * 0x1000) + 0x110000;
   u(val);
 }
-console.timeEnd('\x1b[33mUTF-8 invalid codepoints 1000000\x1b[0m');
+console.timeEnd('\x1b[33mUTF-8 invalid codepoints (10Mops)\x1b[0m');
+
+console.log();
+printStatus(u);
