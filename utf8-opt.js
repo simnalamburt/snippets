@@ -73,19 +73,23 @@ status();
 console.log();
 
 console.time('\x1b[33mNormal UTF-8 (10Mops)\x1b[0m');
-for (i = 0; i < 1E7; ++i) {
-  encode(
-    Math.floor(Math.random() * 0x110000) | 0
-  );
-}
+(_ => {
+  for (i = 0; i < 1E7; ++i) {
+    encode(
+      Math.floor(Math.random() * 0x110000) | 0
+    );
+  }
+})();
 console.timeEnd('\x1b[33mNormal UTF-8 (10Mops)\x1b[0m');
 
 console.time('\x1b[33mUTF-8 invalid codepoints (10Mops)\x1b[0m');
-for (i = 0; i < 1E7; ++i) {
-  encode(
-    (Math.floor(Math.random() * 0x1000) | 0) + 0x110000
-  );
-}
+(_ => {
+  for (i = 0; i < 1E7; ++i) {
+    encode(
+      (Math.floor(Math.random() * 0x1000) | 0) + 0x110000
+    );
+  }
+})();
 console.timeEnd('\x1b[33mUTF-8 invalid codepoints (10Mops)\x1b[0m');
 
 console.log();
