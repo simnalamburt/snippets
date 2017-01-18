@@ -67,24 +67,27 @@ console.log('\x1b[33mExpected    :', [237, 158, 136], '\x1b[0m');
 console.log();
 status();
 console.log('\x1b[33mWarming up... (1Mops)\x1b[0m');
-for (let i = 0; i < 1000000; i++) {
-  const val = Math.floor(Math.random() * 0x100);
-  encode(val);
+for (var i = 0; i < 1000000; i++) {
+  encode(
+    Math.floor(Math.random() * 0x100) | 0
+  );
 }
 status();
 console.log();
 
 console.time('\x1b[33mNormal UTF-8 (10Mops)\x1b[0m');
-for (let i = 0; i < 10000000; i++) {
-  const val = Math.floor(Math.random() * 0x110000);
-  encode(val);
+for (var i = 0; i < 10000000; i++) {
+  encode(
+    Math.floor(Math.random() * 0x110000) | 0
+  );
 }
 console.timeEnd('\x1b[33mNormal UTF-8 (10Mops)\x1b[0m');
 
 console.time('\x1b[33mUTF-8 invalid codepoints (10Mops)\x1b[0m');
-for (let i = 0; i < 10000000; i++) {
-  const val = Math.floor(Math.random() * 0x1000) + 0x110000;
-  encode(val);
+for (var i = 0; i < 10000000; i++) {
+  encode(
+    (Math.floor(Math.random() * 0x1000) | 0) + 0x110000
+  );
 }
 console.timeEnd('\x1b[33mUTF-8 invalid codepoints (10Mops)\x1b[0m');
 
