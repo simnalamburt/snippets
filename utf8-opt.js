@@ -29,11 +29,17 @@ function case3(input) {
 }
 
 function encode(input) {
-  if (!(input === (input|0) && input >= 0 && input < 1114112)) { return []; }
-  else if (input < 128) { return case0(input); }
-  else if (input < 2048) { return case1(input); }
-  else if (input < 65536) { return case2(input); }
-  else { return case3(input); }
+  if (!(input === (input|0) && input >= 0 && input < 1114112)) {
+    return [];
+  } else if (input < 128) {
+    return case0(input);
+  } else if (input < 2048) {
+    return case1(input);
+  } else if (input < 65536) {
+    return case2(input);
+  } else {
+    return case3(input);
+  }
 }
 
 
