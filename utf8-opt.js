@@ -59,6 +59,10 @@ function printStatus(fn) {
 }
 function status() {
   printStatus(encode);
+  printStatus(case0);
+  printStatus(case1);
+  printStatus(case2);
+  printStatus(case3);
 }
 
 console.log('\x1b[33mTest Result :', encode(55176), '\x1b[0m');
