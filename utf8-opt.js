@@ -1,6 +1,7 @@
 //
 // node --trace_opt --trace_deopt --allow-natives-syntax utf8-opt.js
 //
+"use strict";
 
 const u = (function () {
   const h = [0, 192, 224, 240];
