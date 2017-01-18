@@ -1,9 +1,7 @@
 const u = (function () {
   const h = [0, 192, 224, 240];
-  const c = [0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,2,3,3,3,3,3];
-  function b($) { let c = 0; while ($>0) c++, $ >>>= 1; return c; }
   function t($) {
-    const cnt = c[b($)];
+    const cnt = $ < 128 ? 0 : $ < 2048 ? 1 : $ < 65536 ? 2 : 3;
     const ret = new Array(cnt+1);
     const head = h[cnt];
     for (let i = cnt; i > 0; i--) {
@@ -17,6 +15,7 @@ const u = (function () {
     return $ === ($|0) && $ >= 0 && $ < 1114112 ? t($) : []
   }
 })();
+
 
 console.log('Test:', u(55176));
 console.log('Warming up...');
