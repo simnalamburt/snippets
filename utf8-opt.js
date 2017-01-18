@@ -4,19 +4,20 @@
 "use strict";
 
 const h = [0, 192, 224, 240];
-function t($) {
-  const cnt = $ < 128 ? 0 : $ < 2048 ? 1 : $ < 65536 ? 2 : 3;
+function encode_core(input) {
+  const cnt = input < 128 ? 0 : input < 2048 ? 1 : input < 65536 ? 2 : 3;
   const ret = new Array(cnt+1);
   const head = h[cnt];
   for (var i = cnt; i > 0; i--) {
-    ret[i] = 128 | $ & 63;
-    $ >>>= 6;
+    ret[i] = 128 | input & 63;
+    input >>>= 6;
   }
-  ret[0] = head | $;
+  ret[0] = head | input;
   return ret;
 }
-function u($) {
-  return $ === ($|0) && $ >= 0 && $ < 1114112 ? t($) : []
+
+function encode(input) {
+  return input === (input|0) && input >= 0 && input < 1114112 ? encode_core(input) : []
 }
 
 
@@ -35,32 +36,32 @@ function printStatus(fn) {
   }
 }
 
-console.log('\x1b[33mTest:', u(55176), '\x1b[0m');
+console.log('\x1b[33mTest Result :', encode(55176), '\x1b[0m');
 console.log('\x1b[33mExpected    :', [237, 158, 136], '\x1b[0m');
 
 console.log();
-printStatus(u);
+printStatus(encode);
 console.log('\x1b[33mWarming up... (1Mops)\x1b[0m');
 for (let i = 0; i < 1000000; i++) {
   const val = Math.floor(Math.random() * 0x100);
-  u(val);
+  encode(val);
 }
-printStatus(u);
+printStatus(encode);
 console.log();
 
 console.time('\x1b[33mNormal UTF-8 (10Mops)\x1b[0m');
 for (let i = 0; i < 10000000; i++) {
   const val = Math.floor(Math.random() * 0x110000);
-  u(val);
+  encode(val);
 }
 console.timeEnd('\x1b[33mNormal UTF-8 (10Mops)\x1b[0m');
 
 console.time('\x1b[33mUTF-8 invalid codepoints (10Mops)\x1b[0m');
 for (let i = 0; i < 10000000; i++) {
   const val = Math.floor(Math.random() * 0x1000) + 0x110000;
-  u(val);
+  encode(val);
 }
 console.timeEnd('\x1b[33mUTF-8 invalid codepoints (10Mops)\x1b[0m');
 
 console.log();
-printStatus(u);
+printStatus(encode);
