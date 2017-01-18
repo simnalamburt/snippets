@@ -1,3 +1,7 @@
+//
+// node --trace_opt --trace_deopt --allow-natives-syntax utf8-opt.js
+//
+
 const u = (function () {
   const h = [0, 192, 224, 240];
   function t($) {
@@ -17,23 +21,40 @@ const u = (function () {
 })();
 
 
-console.log('Test:', u(55176));
-console.log('Warming up...');
+//
+// Bench codes
+//
+function printStatus(fn) {
+  switch(%GetOptimizationStatus(fn)) {
+  case 1:   console.log("\x1b[32mFunction is optimized\x1b[0m"); return;
+  case 2:   console.log("\x1b[32mFunction is not optimized\x1b[0m"); return;
+  case 3:   console.log("\x1b[32mFunction is always optimized\x1b[0m"); return;
+  case 4:   console.log("\x1b[32mFunction is never optimized\x1b[0m"); return;
+  case 6:   console.log("\x1b[32mFunction is maybe deoptimized\x1b[0m"); return;
+  case 7:   console.log("\x1b[32mFunction is optimized by TurboFan\x1b[0m"); return;
+  default:  console.log("\x1b[32mUnknown optimization status\x1b[0m"); return;
+  }
+}
+
+printStatus(u);
+
+console.log('\x1b[33mTest:', u(55176), '\x1b[0m');
+console.log('\x1b[33mWarming up...\x1b[0m');
 for (let i = 0; i < 1000000; i++) {
   const val = Math.floor(Math.random() * 0x100);
   u(val);
 }
 
-console.time('Normal UTF-8 1000000');
+console.time('\x1b[33mNormal UTF-8 1000000\x1b[0m');
 for (let i = 0; i < 1000000; i++) {
   const val = Math.floor(Math.random() * 0x110000);
   u(val);
 }
-console.timeEnd('Normal UTF-8 1000000');
+console.timeEnd('\x1b[33mNormal UTF-8 1000000\x1b[0m');
 
-console.time('UTF-8 invalid codepoints 1000000');
+console.time('\x1b[33mUTF-8 invalid codepoints 1000000\x1b[0m');
 for (let i = 0; i < 1000000; i++) {
   const val = Math.floor(Math.random() * 0x1000) + 0x110000;
   u(val);
 }
-console.timeEnd('UTF-8 invalid codepoints 1000000');
+console.timeEnd('\x1b[33mUTF-8 invalid codepoints 1000000\x1b[0m');
