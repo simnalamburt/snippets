@@ -4,9 +4,6 @@
 //
 "use strict";
 
-function case0(input) {
-  return [input];
-}
 function case1(input) {
   return [
     0b11000000 | (input >>> 6),
@@ -31,7 +28,7 @@ function case3(input) {
 
 function encode(input) {
   if (input !== (input|0) || input < 0 || input >= 0x00110000) { return []; }
-  if (input < 2** 7) { return case0(input); }
+  if (input < 2**7) { return [input]; }
   if (input < 2**11) { return case1(input); }
   if (input < 2**16) { return case2(input); }
   return case3(input);
@@ -54,7 +51,6 @@ function printStatus(fn) {
 }
 function status() {
   printStatus(encode);
-  printStatus(case0);
   printStatus(case1);
   printStatus(case2);
   printStatus(case3);
