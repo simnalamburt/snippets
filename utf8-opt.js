@@ -36,6 +36,7 @@ function printStatus(fn) {
 }
 
 console.log('\x1b[33mTest:', u(55176), '\x1b[0m');
+console.log('\x1b[33mExpected    :', [237, 158, 136], '\x1b[0m');
 
 console.log();
 printStatus(u);
