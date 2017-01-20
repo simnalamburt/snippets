@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+BASE=$(date +%s%N)
+get_ms() {
+  NOW=$(date +%s%N)
+  print $(( ($NOW - $BASE) / 1000000.0 ))ms
+  BASE=$NOW
+}
+
+for i in $(seq 1 500000); do
+done
+
+get_ms
+
+for i in $(seq 1 800000); do
+done
+
+get_ms
