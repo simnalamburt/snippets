@@ -1,6 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-import Data.Monoid
 import qualified Data.ByteString.Char8 as B
 
 spacedConcat :: [B.ByteString] -> B.ByteString
