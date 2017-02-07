@@ -1,3 +1,4 @@
+sigma :: (Num a, Ord a) => a -> a -> (a -> a) -> a
 sigma a b f =
   let inner c r =
         if c > b
