@@ -4,7 +4,7 @@
 import qualified Data.ByteString.Char8 as Bytes
 import System.IO
 
-main :: IO()
+main :: IO ()
 main = do
   -- System.IO
   input <- openFile "input" ReadMode
