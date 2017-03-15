@@ -1,3 +1,13 @@
+// 이주헌 과제 도와주기
+// ========
+// Programming Practice, SNU 4190.103A
+//
+//     gcc main.c
+//
+// ### TODOs
+// - [ ] 맨 앞에 뜨는 공백문자 삭제
+// - [ ] 빈 토큰은 처리하지 않기
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
