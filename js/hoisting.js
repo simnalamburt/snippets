@@ -2,3 +2,6 @@
 console.log(x);
 
 var x;
+
+// Reference:
+//   https://rainsoft.io/variables-lifecycle-and-why-let-is-not-hoisted/
