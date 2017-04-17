@@ -1,9 +1,13 @@
 # frozen_string_literal: true
-Dir['**/*'].map do |x|
-  next if File.directory?(x)
+puts (Dir['**/*'].flat_map do |x|
+  next [] if File.directory?(x)
 
-  name = File.basename(x)
+  # 여기서 정책 조정
+  #name = File.basename(x)
+  name = File.basename(x, '.*')
+
   result = system("rg -qF '#{name}'")
-  next if result
-  puts x
-end
+  next [] if result
+
+  x
+end).entries.sort
