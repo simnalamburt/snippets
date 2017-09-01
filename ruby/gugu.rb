@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 for a in 1..9
   for b in 2..5
     printf "%d * %d = %2d\t", b, a, a*b

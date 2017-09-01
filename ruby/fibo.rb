@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 def fib n
   return n if n < 2
   fib(n-2) + fib(n-1)

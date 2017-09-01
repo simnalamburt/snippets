@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 x = (lambda do
   for i in 0...5
     begin

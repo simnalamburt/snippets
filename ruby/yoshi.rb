@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # http://i.imgur.com/kwnQ6Iy.png
 
 class String

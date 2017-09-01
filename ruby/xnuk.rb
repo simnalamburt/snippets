@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+# frozen_string_literal: true
 loop do
   begin
     result = gets.force_encoding('CP949').encode('UTF-8').strip

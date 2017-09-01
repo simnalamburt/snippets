@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+# frozen_string_literal: true
 File.readlines('/etc/passwd').each do |line|
   user = line.chomp.split(':')[0]
   next if user.nil?

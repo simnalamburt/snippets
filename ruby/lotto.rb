@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ball = 1..45
 count = 7
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 def line desc, value
   puts "%20s : #{value}" % desc
 end

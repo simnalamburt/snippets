@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # TL;DR
 #
 # 1.  Proc.new 와 proc 은 완전히 같음
