@@ -1,0 +1,41 @@
+#!/bin/bash
+set -e
+
+DIRNAME="blabla"
+
+convert() {
+  local RUN=$1
+  local RESULT EXT
+
+  for FILE in $(find "$DIRNAME" -type f); do
+    RESULT=$(xxd -p -l 4 "$FILE")
+
+    if [ "$RESULT" = "ffd8ffe0" ]; then
+      EXT="jpg"
+    elif [ "$RESULT" = "ffd8ffe1" ]; then
+      EXT="jpg"
+    elif [ "$RESULT" = "89504e47" ]; then
+      EXT="png"
+    else
+      printf "알수없는 형식의 파일을 만났다!\n\n$FILE\n\n"
+      xxd -l 32 "$FILE"
+      exit 1
+    fi;
+
+    if [ "$RUN" = "--run" ]; then
+      mv "$FILE" "$FILE.$EXT"
+    else
+      printf "mv $FILE $FILE.$EXT\n"
+    fi
+  done
+}
+
+convert
+
+read -r -p "파일 이름을 바꾸시겠어요? [y/N] " RESPONSE
+case "$RESPONSE" in
+  [yY][eE][sS]|[yY]);;
+  *) exit 1;;
+esac
+
+convert --run
