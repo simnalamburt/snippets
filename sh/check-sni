@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# 이거 해서 아래와 같은 문장이 출력되면 서버가 SNI를 지원하는거임
+#
+#     TLS server extension "server name" (id=0), len=0
+#
+# Reference:
+#   https://serverfault.com/a/780388
+
+SERVER="hyeon.me"
+
+openssl s_client -servername "$SERVER" -tlsextdebug \
+  -connect "$SERVER:443" 2>/dev/null | grep "server name"
