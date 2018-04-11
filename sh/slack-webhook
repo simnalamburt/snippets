@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail; IFS=$'\n\t'
+
+WEBHOOK_URL='https://hooks.slack.com/services/Txxxxxxxx/Byyyyyyyy/izzzzzzzzzzzzzzzzzzzzzzz'
+
+curl -is -XPOST \
+  -H 'Content-type: application/json' \
+  -d '{ "text": "테스트" }' \
+  "$WEBHOOK_URL"
+
+curl -is -XPOST \
+  -H 'Content-type: application/json' \
+  -d '{ "text": "테스트", "channel": "#some-channel" }' \
+  "$WEBHOOK_URL"
