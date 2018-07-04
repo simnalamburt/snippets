@@ -1,9 +1,9 @@
 #include <iostream>
 #include <array>
+
 using namespace std;
 
-int main()
-{
+int main() {
   array<int, 10> List;
   //     │    └ 배열의 길이
   //     │
