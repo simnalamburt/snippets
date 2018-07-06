@@ -9,7 +9,9 @@ auto main() -> int
 {
   using namespace std;
 
-  cout << "비밀번호를 입력해보렴 : " << flush;
+  constexpr const auto constant { "숫자를 입력해보세요 : " };
+
+  cout << constant << flush;
   int a;
   cin >> a;
   int b = hipass(a);
