@@ -50,8 +50,11 @@ constexpr slice type_name() {
 //
 void foo(int a, int b) { }
 int main() {
+  constexpr const auto constant { "숫자를 입력해보세요 : " };
+  constexpr auto less_constant { "숫자를 입력해보세요 : " };
   auto boo = foo;
 
-  boo(3, 5);
+  cout << type_name<decltype(constant)>() << endl;
+  cout << type_name<decltype(less_constant)>() << endl;
   cout << type_name<decltype(boo)>() << endl;
 }
