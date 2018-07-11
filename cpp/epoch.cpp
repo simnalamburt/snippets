@@ -1,16 +1,15 @@
 #include <ctime>
 #include <iostream>
+#include "date.h" // https://github.com/HowardHinnant/date
 
 using namespace std;
+using namespace std::chrono;
+using namespace date;
 
 int main() {
-  {
-    auto epoch = time(nullptr);
-    cout << epoch << endl;
-  }
+  cout << time(nullptr) << endl;
+  cout << std::chrono::seconds(std::time(NULL)).count() << endl;
 
-  {
-    auto epoch = std::chrono::seconds(std::time(NULL)).count();
-    cout << epoch << endl;
-  }
+  cout << format("%FT%T", floor<seconds>(system_clock::now())) << endl;
+  cout << format("%FT%T", sys_seconds { seconds { time(nullptr) } }) << endl;
 }
