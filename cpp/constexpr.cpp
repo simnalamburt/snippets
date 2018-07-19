@@ -1,21 +1,29 @@
-#include <iostream>
+// g++ -std=c++14 constexpr.cpp
 
-constexpr auto hipass(int input) -> int
-{
-  return input;
+#include <cstdio>
+
+constexpr const char* filename(const char * const path) {
+  const char *begin = path;
+
+  while (*begin != 0) { ++begin; };
+  while (*begin != '/' && begin != path) { --begin; };
+  if (*begin == '/') { ++begin; };
+
+  return begin;
 }
 
-auto main() -> int
-{
-  using namespace std;
+int main() {
+  constexpr auto name = filename(__FILE__);
 
-  constexpr const auto constant { "숫자를 입력해보세요 : " };
-
-  cout << constant << flush;
-  int a;
-  cin >> a;
-  int b = hipass(a);
-  cout << "비밀번호 : " << b << endl;
-
-  return 0;
+  puts(__FILE__);
+  puts(filename(__FILE__));
+  puts(filename("a.out"));
+  puts(filename("./a"));
+  puts(filename("/a"));
+  puts(filename("a"));
+  puts(filename("///"));
+  puts(filename("//a.out/"));
+  puts(filename(""));
+  puts(filename("/"));
+  puts(filename("/////////////////////////"));
 }
