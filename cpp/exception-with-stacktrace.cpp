@@ -30,9 +30,9 @@ struct wrapped_exception : std::exception {
     return st;
   } () };
 
-  virtual ~wrapped_exception() { }
+  virtual ~wrapped_exception() = default;
   virtual const std::exception& get() const = 0;
-  virtual const char* what() const noexcept override { return get().what(); }
+  virtual const char* what() const noexcept final override { return get().what(); }
 };
 
 template <typename T>
@@ -40,7 +40,7 @@ struct wrapped_exception_impl : wrapped_exception {
   T exception;
 
   wrapped_exception_impl(const T &e) : exception(e) { }
-  virtual ~wrapped_exception_impl() { }
+  virtual ~wrapped_exception_impl() = default;
   virtual const std::exception& get() const override { return exception; }
 };
 
