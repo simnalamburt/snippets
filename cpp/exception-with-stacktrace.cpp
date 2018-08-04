@@ -1,7 +1,8 @@
 // How to build:
 //
-//     # nlohmann/json.hpp and backward.hpp should be located at './includes/' directory
-//     # See https://github.com/bombela/backward-cpp for further details
+//     # Dependencies:
+//     #   https://github.com/nlohmann/json
+//     #   https://github.com/bombela/backward-cpp
 //
 //     sudo apt-get install bintuils-dev
 //     g++ -DBACKWARD_HAS_BFD=1 -std=c++11 -g -I./includes -o main.o -c main.cpp
