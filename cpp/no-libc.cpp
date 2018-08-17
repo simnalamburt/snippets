@@ -6,7 +6,7 @@ g++ \
   -fno-exceptions -fno-rtti -fno-stack-protector -fomit-frame-pointer \
   -ffunction-sections -fdata-sections -fno-math-errno -fmerge-all-constants \
   -fno-ident -fno-asynchronous-unwind-tables -fno-unwind-tables \
-  -Wl,--build-id=none,--gc-sections,-z,norelro \
+  -Wl,--build-id=none,--gc-sections,--nmagic,-z,norelro \
   no-libc.cpp &&\
   \
   strip -S --strip-unneeded \
