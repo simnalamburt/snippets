@@ -1,12 +1,11 @@
 /*
 
 g++ \
-  -std=c++11 -W -Wall -Wextra -Wpedantic -s -Os \
+  -std=c++11 -Wall -Wextra -Wpedantic -s -Os \
   -nostartfiles -nodefaultlibs -nostdlib -static \
-  -fno-exceptions -fno-rtti -fno-stack-protector -fomit-frame-pointer \
-  -ffunction-sections -fdata-sections -fno-math-errno -fmerge-all-constants \
-  -fno-ident -fno-asynchronous-unwind-tables -fno-unwind-tables \
-  -Wl,--build-id=none,--gc-sections,--nmagic,-z,norelro \
+  -fno-exceptions -fno-asynchronous-unwind-tables -fno-unwind-tables \
+  -fno-stack-protector \
+  -Wl,--build-id=none,--gc-sections,--nmagic \
   no-libc.cpp &&\
   \
   strip -S --strip-unneeded \
@@ -37,9 +36,7 @@ namespace {
   //
   // Reference:
   //   STDIN(3), http://man7.org/linux/man-pages/man3/stdin.3.html
-  constexpr auto STDIN_FILENO = 0;
   constexpr auto STDOUT_FILENO = 1;
-  constexpr auto STDERR_FILENO = 2;
 
   // SYSCALL(2) - indirect system call
   //
@@ -48,7 +45,7 @@ namespace {
   //   glibc's syscall() function implementation, https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/x86_64/syscall.S
   //   SYSCALL(2), http://man7.org/linux/man-pages/man2/syscall.2.html
   extern "C" [[gnu::naked]] long syscall(long number, ...);
-  asm volatile(R"(
+  asm(R"(
   syscall:
     movq %rdi,    %rax; # syscall number -> rax
     movq %rsi,    %rdi; # shift arg1 - arg5
