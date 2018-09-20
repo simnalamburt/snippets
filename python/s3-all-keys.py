@@ -55,9 +55,11 @@ def all_keys_boto2(bucket, prefix, regex):
     @return: 조건을 만족하는 파일들을 담은 제네레이터
     '''
     import boto
+    from boto.s3.bucket import Bucket
     program = re.compile(regex)
-    yield from (obj.name for obj
-        in boto.connect_s3().get_bucket(bucket).list(prefix=prefix)
+    yield from (
+        obj.name for obj
+        in Bucket(boto.connect_s3(), bucket).list(prefix=prefix)
         if program.match(obj.name))
 
 # 실행 예시
