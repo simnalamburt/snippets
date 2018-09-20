@@ -1,14 +1,26 @@
+# Natives
 a.out
+*.o
+
+# Node.js
 node_modules
+
+# Python
 *.pyc
+.venv/
+
+# Crystal
 .crystal
+# Nim
 nimcache
 
-*.o
+# Java
 *.class
 
+# Haskell
 /haskell/*
 !/haskell/*.hs
 
+# Idris
 /idris/*
 !/idris/*.idr
