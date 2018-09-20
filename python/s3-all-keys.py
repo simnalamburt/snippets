@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import re
 from importlib.util import find_spec
 
@@ -6,6 +5,8 @@ def all_keys(Bucket, Prefix, Regex):
     '''
     특정 S3 버킷 안에 있는 모든 키들을 제네레이터로 반환해주는 함수.
     boto3나 boto 둘중 하나만 깔려있으면 작동한다.
+
+    Reference: https://github.com/simnalamburt/snippets/blob/master/python/s3-all-keys.py
 
     @param Bucket: 버킷 이름
     @param Prefix: 프리픽스
@@ -25,15 +26,18 @@ def all_keys(Bucket, Prefix, Regex):
             if token is None:
                 break
             kwargs['ContinuationToken'] = token
-    else:
+    elif find_spec('boto3'):
         import boto
         conn = boto.connect_s3()
         bucket = conn.get_bucket(Bucket)
         yield from (key.name for key in bucket.list(prefix=Prefix) if program.match(key.name))
+    else:
+        raise ModuleNotFoundError("Module 'boto3' or 'boto' is required")
 
 # 실행 예시
-for key in all_keys(
-        Bucket='ryft-public-sample-data',
-        Prefix='ODBC',
-        Regex=r'^.*\.gz$'):
-    print(key)
+if __name__ == '__main__':
+    for key in all_keys(
+            Bucket='ryft-public-sample-data',
+            Prefix='ODBC',
+            Regex=r'^.*\.gz$'):
+        print(key)
