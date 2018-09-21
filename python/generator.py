@@ -6,4 +6,8 @@ def foo(input):
         index += i
         i += 1
 
-breakpoint()
+def bar():
+    yield from ((i, i) for i in range(5))
+
+print(list(foo('....................................+++++')))
+print(list(bar()))
