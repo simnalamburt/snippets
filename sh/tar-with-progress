@@ -1,0 +1,39 @@
+#!/bin/bash
+# 진행상황이 표시되는 tar. pv가 없는 시스템에서도 동작한다.
+#
+# mktemp, GNU tar, bash, bc 가 필요하다. 아래 소스코드에서 'PATH_TO_DIRECTORY',
+# 'DIRECTORY' 부분을 치환해서 쓰면 됨.
+
+set -euo pipefail; IFS=$'\n\t'
+
+SCRIPT_PATH="$(mktemp)"
+cat <<'EOF' >"$SCRIPT_PATH"
+#!/bin/bash
+set -euo pipefail; IFS=$'\n\t'
+
+CURRENT_CHECKPOINT="$1"
+CURRENT_SIZE="$(( (CURRENT_CHECKPOINT - 1)*10240 ))"
+CURRENT_SIZE_MIB="$(echo "scale=2; ${CURRENT_SIZE} / 1048576" | bc -l)"
+
+TOTAL_SIZE="$2"
+TOTAL_SIZE_MIB="$(echo "scale=2; ${TOTAL_SIZE} / 1048576" | bc -l)"
+
+PERCENTAGE="$(echo "scale=2; ${CURRENT_SIZE} / ${TOTAL_SIZE} * 100" | bc -l)"
+
+echo "${CURRENT_SIZE_MIB}MiB / ${TOTAL_SIZE_MIB}MiB (${PERCENTAGE}%)"
+EOF
+chmod +x "$SCRIPT_PATH"
+
+TOTAL_SIZE="$(du -b /PATH_TO_DIRECTORY/DIRECTORY | cut -f1)"
+
+tar \
+  --create \
+  --force-local \
+  --file="/home/simnalamburt/upnl.org/backups/upload-$(date -Im).tar" \
+  --record-size=10240 \
+  --checkpoint=10000 \
+  --checkpoint-action="exec=$SCRIPT_PATH \$TAR_CHECKPOINT $TOTAL_SIZE" \
+  --directory=/PATH_TO_DIRECTORY \
+  DIRECTORY
+
+rm "$SCRIPT_PATH"
