@@ -1,0 +1,19 @@
+#!/bin/bash
+__get_ms_time="$(date +%s%N)"
+get_ms() {
+  local new_time="$(date +%s%N)"
+  echo "$(( new_time - __get_ms_time ))ns"
+  __get_ms_time="$new_time"
+}
+
+for i in {1..300000}; do
+  :
+done
+
+get_ms
+
+for i in {1..500000}; do
+  :
+done
+
+get_ms
