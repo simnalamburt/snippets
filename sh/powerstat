@@ -1,0 +1,24 @@
+#!/bin/bash
+
+powerstat() {
+  local msg
+  local name
+  local power
+
+  msg="$(system_profiler SPPowerDataType)"
+  name="$(echo "$msg" | sed -n 's/^      Name: //p')"
+  power="$(echo "$msg" | sed -n 's/^      Wattage (W): //p')"
+  power="${power:+${power}W}"
+
+  printf 'Connected?: %s%s\nCharging?: %s\n공급 전력: %s\n\n' \
+    "$(echo "$msg" | sed -n 's/^      Connected: //p')" \
+    "${name:+ ($name)}" \
+    "$(echo "$msg" | sed -n 's/^      Charging: //p')" \
+    "${power:-N/A}"
+
+  awk 'BEGIN { print "전력 변화: " ARGV[1]*ARGV[2]/1000000 "W = " ARGV[1]/1000 "A × " ARGV[2]/1000 "V" }' \
+    "$(echo "$msg" | sed -n 's/^      Amperage (mA): //p')" \
+    "$(echo "$msg" | sed -n 's/^      Voltage (mV): //p')"
+}
+
+powerstat
