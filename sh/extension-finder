@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail; IFS=$'\n\t'
 
 DIRNAME="blabla"
 
@@ -17,7 +17,7 @@ convert() {
     elif [ "$RESULT" = "89504e47" ]; then
       EXT="png"
     else
-      printf "알수없는 형식의 파일을 만났다!\n\n$FILE\n\n"
+      printf '알수없는 형식의 파일을 만났다!\n\n%s\n\n' "$FILE"
       xxd -l 32 "$FILE"
       exit 1
     fi;
@@ -25,7 +25,7 @@ convert() {
     if [ "$RUN" = "--run" ]; then
       mv "$FILE" "$FILE.$EXT"
     else
-      printf "mv $FILE $FILE.$EXT\n"
+      printf 'mv %s %s.%s\n' "$FILE" "$FILE" "$EXT"
     fi
   done
 }

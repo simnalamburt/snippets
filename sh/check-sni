@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # 이거 해서 아래와 같은 문장이 출력되면 서버가 SNI를 지원하는거임
 #
@@ -6,6 +6,8 @@
 #
 # Reference:
 #   https://serverfault.com/a/780388
+
+set -euo pipefail; IFS=$'\n\t'
 
 SERVER="hyeon.me"
 

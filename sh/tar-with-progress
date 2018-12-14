@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # 진행상황이 표시되는 tar. pv가 없는 시스템에서도 동작한다.
 #
 # mktemp, GNU tar, bash, bc 가 필요하다. 아래 소스코드에서 'PATH_TO_DIRECTORY',
