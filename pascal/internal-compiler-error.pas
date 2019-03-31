@@ -22,7 +22,7 @@ procedure recursion(list: Array of Integer);
 begin
   exit();
 
-  // An error occurs as compiler attempts to tail call optimizate this line.
+  // An error occurs as compiler attempts to tail call optimize this line.
   // You should change the input type of this function into pointer of array.
   recursion(list);
 end;
