@@ -1,0 +1,79 @@
+#!/bin/bash
+set -euo pipefail; IFS=$'\n\t'
+
+help () {
+  cat <<-'EOF'
+aws-mfa
+MFA 인증이 완료된 AWS CLI 액세스 토큰을 얻어와주는 유틸리티입니다.
+
+Usage:
+  aws-mfa <token-arn> <profile-name>
+
+Example:
+  aws-mfa arn:aws:iam::302617221463:mfa/simnalamburt femiwiki-mfa
+EOF
+}
+
+if [[ "$#" != '2' ]]; then
+  help
+  exit 1
+fi
+
+SERIAL_NUMBER="${1}"
+PROFILE_NAME="${2}"
+
+
+#
+# 종속성 확인
+#
+for DEP in python aws; do
+  if ! command -v "$DEP" >/dev/null 2>&1; then
+    ABSENT=$DEP
+    break
+  fi
+done
+if [[ -n ${ABSENT+x} ]]; then
+  echo "프로그램 '$ABSENT'가 설치되어있지 않습니다."
+  exit 1
+fi
+
+
+#
+# 기존 토큰 만료 여부 확인
+#
+EXPIRATION=$(aws configure get "profile.${PROFILE_NAME}.expiration" || true)
+# 새 토큰을 발급받아야 하는 상황에서만 1을 반환하는 스크립트
+if python <<-EOF; then echo '이미 유효한 토큰이 발급되어있어 아무것도 하지 않았습니다.' && exit; fi
+# coding: utf-8
+from sys import exit
+from datetime import datetime as dt
+
+expr = '${EXPIRATION}'
+exit(1 if (not expr) or dt.strptime(expr, '%Y-%m-%dT%H:%M:%SZ') <= dt.utcnow() else 0)
+EOF
+
+
+#
+# OTP 코드 입력받음
+#
+read -p 'AWS 토큰 숫자 여섯자리를 입력하세요: ' -r TOKEN_CODE
+
+
+#
+# 발급받은 액세스토큰 저장
+#
+JSON=$(
+  aws sts get-session-token \
+    --duration-seconds 129600 \
+    --serial-number "${SERIAL_NUMBER}" \
+    --token-code "${TOKEN_CODE}"
+)
+aws configure set "profile.${PROFILE_NAME}.aws_access_key_id" \
+  "$(<<< "$JSON" python -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["AccessKeyId"])')"
+aws configure set "profile.${PROFILE_NAME}.aws_secret_access_key" \
+  "$(<<< "$JSON" python -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["SecretAccessKey"])')"
+aws configure set "profile.${PROFILE_NAME}.aws_session_token" \
+  "$(<<< "$JSON" python -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["SessionToken"])')"
+aws configure set "profile.${PROFILE_NAME}.expiration" \
+  "$(<<< "$JSON" python -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["Expiration"])')"
+echo '토큰 갱신이 완료되었습니다.'
