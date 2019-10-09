@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# fzf로 원하는 파일 내용을 검색한 뒤, vim으로 열어주는 프로그램.
+# 다중선택도 지원한다
+#
+# Special thanks to @xnuk https://github.com/xnuk/
+
+set -euo pipefail; IFS=$'\n\t'
+
+ARGS=$(
+  rg --no-config -nH0 --color=always '\A' --replace '🌏🔥🐸🐹😂😍😘' |
+    fzf --tac --ansi --multi --delimiter='\0|🌏🔥🐸🐹😂😍😘' --nth='2..' --with-nth='1,3..' |
+    rg --no-config -a '\A(.*)\x00(.*):🌏🔥🐸🐹😂😍😘(.*)$' --replace ' +"tabnew +$2 $1"' |
+    tr -d '\n'
+)
+
+eval "vim${ARGS} +1tabclose"
