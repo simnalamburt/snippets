@@ -1,0 +1,5 @@
+#!/bin/bash
+set -eu; IFS=$'\n\t'
+
+base64 /dev/urandom|tr -d '+=/'|head -c ${1:-80}
+echo
