@@ -27,5 +27,5 @@ fn main() {
     println!("boom!\n");
 }
 
-// Same with https://github.com/simnalamburt/snippets/blob/master/rust/infinite.rs
+// Same with https://github.com/simnalamburt/snippets/blob/12e73f45f3/rust/infinite.rs
 // Maintained for https://github.com/rust-lang/rust/issues/28728
