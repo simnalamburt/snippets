@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-pod
+spec:
+  containers:
+  - name: alpine
+    image: subfuzion/netcat
+    command:
+      - tail
+      - -f
+      - /dev/null
+  tolerations:
+    # this is required so CCM can bootstrap itself
+    - key: node.cloudprovider.kubernetes.io/uninitialized
+      value: "true"
+      effect: NoSchedule
+    # this is to have the daemonset runnable on master nodes the taint may
+    # vary depending on your cluster setup
+    - key: node-role.kubernetes.io/master
+      effect: NoSchedule

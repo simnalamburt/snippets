@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-cert
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-cert
+  template:
+    metadata:
+      labels:
+        app: test-cert
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-cert
+spec:
+  selector:
+    app: test-cert
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: test-cert
+spec:
+  tls:
+    - hosts: ['gemini.upnl.org']
+      secretName: test-cert
+  rules:
+    - host: gemini.upnl.org
+      http:
+        paths:
+          - backend:
+              serviceName: test-cert
+              servicePort: 80
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: test-cert
+spec:
+  secretName: test-cert
+  dnsNames:
+    - gemini.upnl.org
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
