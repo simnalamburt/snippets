@@ -8,7 +8,7 @@ easy to deploy. Don't bother with shared objects anymore!
     # Both clang++ and g++ are supported
     # You are free to remove the '-m32' option below if you want
     clang++ -m32 \
-      -std=c++11 -Wall -Wextra -Wpedantic -s -Os -nostartfiles -nodefaultlibs -nostdlib -static \
+      -std=c++11 -Wall -Wextra -Wpedantic -s -Oz -nostartfiles -nodefaultlibs -nostdlib -static \
       -fno-exceptions -fno-asynchronous-unwind-tables -fno-unwind-tables -fno-stack-protector \
       -Wl,--build-id=none,--gc-sections,--omagic no-libc.cpp
     strip -S --strip-unneeded \
