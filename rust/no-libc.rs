@@ -22,7 +22,7 @@
 //!
 //!     readelf -e no-libc
 //!     stat '-c%s' no-libc
-//!     # 344
+//!     # 308
 
 #![feature(core_intrinsics, asm)]
 #![no_std]
@@ -62,7 +62,8 @@ fn _exit(status: i32) -> ! {
 /// Entrypoint
 #[no_mangle]
 extern "C" fn _start() -> ! {
-    let message = "Hello, world!\n";
+    // rustc will generate '.rodata' section if you use string literals
+    let message = [b'H', b'e', b'l', b'l', b'o', b',', b' ', b'w', b'o', b'r', b'l', b'd', b'!', b'\n'];
 
     write(STDOUT_FILENO, message.as_ptr(), message.len());
     _exit(0);
