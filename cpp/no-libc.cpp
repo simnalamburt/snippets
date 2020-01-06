@@ -8,18 +8,23 @@ easy to deploy. Don't bother with shared objects anymore!
     # Both clang++ and g++ are supported
     # You are free to remove the '-m32' option below if you want
     clang++-9 -m32 \
-      -std=c++11 -Wall -Wextra -Wpedantic -s -Oz -nostartfiles -nodefaultlibs -nostdlib -static \
+      -std=c++11 -Wall -Wextra -Wpedantic \
+      -Oz \
+      -nostartfiles -nodefaultlibs -nostdlib -static \
       -fno-exceptions -fno-asynchronous-unwind-tables -fno-unwind-tables -fno-stack-protector \
-      -Wl,--build-id=none,--gc-sections,--omagic no-libc.cpp
-    strip -S --strip-unneeded \
-      --remove-section=.note.gnu.gold-version \
-      --remove-section=.comment \
-      --remove-section=.note \
-      --remove-section=.note.gnu.build-id \
-      --remove-section=.note.ABI-tag \
+      -Wl,--build-id=none,--gc-sections,--omagic \
+      -fno-PIC -fno-PIE \
+      no-libc.cpp
+    strip -s \
+      -R .comment \
+      -R .note \
+      -R .note.ABI-tag \
+      -R .note.gnu.build-id \
+      -R .note.gnu.gold-version \
       a.out
 
-    stat '-c%s' ./a.out
+    readelf -e a.out
+    stat '-c%s' a.out
     # 368
 
 See Also:
