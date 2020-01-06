@@ -7,7 +7,7 @@ easy to deploy. Don't bother with shared objects anymore!
 
     # Both clang++ and g++ are supported
     # You are free to remove the '-m32' option below if you want
-    clang++ -m32 \
+    clang++-9 -m32 \
       -std=c++11 -Wall -Wextra -Wpedantic -s -Oz -nostartfiles -nodefaultlibs -nostdlib -static \
       -fno-exceptions -fno-asynchronous-unwind-tables -fno-unwind-tables -fno-stack-protector \
       -Wl,--build-id=none,--gc-sections,--omagic no-libc.cpp
@@ -20,7 +20,7 @@ easy to deploy. Don't bother with shared objects anymore!
       a.out
 
     stat '-c%s' ./a.out
-    # The size of the compiled binary will be around 500 bytes
+    # 368
 
 See Also:
   https://github.com/dfouhey/caffe64
