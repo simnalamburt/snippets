@@ -2,6 +2,10 @@
 a.out
 *.o
 
+# Rust
+/rust/*
+!/rust/*.rs
+
 # Node.js
 node_modules
 
