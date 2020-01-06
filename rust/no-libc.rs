@@ -1,15 +1,28 @@
-// WIP
-// 용량 더 줄일 수 있음
-
 //! Boilerplate for lightweight Rust binary
 //! ========
 //! Welcome to the libc-free world! Your binary will be super lightweight and
 //! easy to deploy. Don't bother with shared objects anymore!
 //!
+//!     # With rustc 1.40.0
 //!     RUSTC_BOOTSTRAP=1 rustc --target=i686-unknown-linux-gnu \
+//!       -C opt-level=s \
 //!       -C panic=abort \
-//!       -C link-args='-nostartfiles -nodefaultlibs -nostdlib -static' \
+//!       -C link-args='-nostartfiles -nodefaultlibs -nostdlib -static
+//!         -fno-exceptions -fno-asynchronous-unwind-tables -fno-unwind-tables -fno-stack-protector
+//!         -Wl,--build-id=none,--gc-sections,--omagic' \
+//!       -C relocation-model=static \
 //!       no-libc.rs
+//!     strip -s \
+//!       -R .comment \
+//!       -R .note \
+//!       -R .note.ABI-tag \
+//!       -R .note.gnu.build-id \
+//!       -R .note.gnu.gold-version \
+//!       no-libc
+//!
+//!     readelf -e no-libc
+//!     stat '-c%s' no-libc
+//!     # 344
 
 #![feature(core_intrinsics, asm)]
 #![no_std]
