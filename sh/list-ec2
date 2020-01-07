@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euo pipefail; IFS=$'\n\t'
+
+aws ec2 describe-instances --query 'Reservations[].Instances[].{id:InstanceId, name:Tags[?Key==`Name`].Value|[0]}' | jq '.[] | [.id, .name] | @tsv' -r
