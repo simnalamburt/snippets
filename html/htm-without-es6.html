@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body>
+  <script src="https://unpkg.com/htm@3.0.3/preact/standalone.umd.js"></script>
+  <script>
+  var es6html = htmPreact.html
+  var render = htmPreact.render
+
+  function html() {
+    var params = [], slices = []
+    for (var i = 0; i < arguments.length; ++i) {
+      (i%2 === 0 ? slices : params).push(arguments[i])
+    }
+    return es6html.apply(null, [slices].concat(params))
+  }
+
+  var title = 'Hello, world!'
+  var content = 'yolo'
+
+  render(
+    html('\
+      <h1>',title,'</h1>\
+      <p>',content,'</p>\
+    '),
+    document.body
+  )
+  </script>
+</body>
+</html>
