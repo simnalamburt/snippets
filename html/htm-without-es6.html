@@ -4,24 +4,39 @@
 <body>
   <script src="https://unpkg.com/htm@3.0.3/preact/standalone.umd.js"></script>
   <script>
-  var es6html = htmPreact.html
-  var render = htmPreact.render
-
+  // ES5 wrapper of htm
   function html() {
     var params = [], slices = []
     for (var i = 0; i < arguments.length; ++i) {
+      // Under htm syntax, users are forced to write HTML and template variable
+      // alternatively.
       (i%2 === 0 ? slices : params).push(arguments[i])
     }
-    return es6html.apply(null, [slices].concat(params))
+    return htmPreact.html.apply(null, [slices].concat(params))
   }
 
+  //
+  // Sample App
+  //
   var title = 'Hello, world!'
   var content = 'yolo'
 
-  render(
+  // Expressing complex syntax
+  function list() {
+    var list = ['foo', 'bar', 'swag']
+
+    return html('\
+      <ul>\
+        ',list.map(function(e) { return html('<li>',e,'</li>') }),'\
+      </ul>\
+    ')
+  }
+
+  htmPreact.render(
     html('\
       <h1>',title,'</h1>\
       <p>',content,'</p>\
+      <',list,'/>\
     '),
     document.body
   )
