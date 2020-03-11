@@ -1,0 +1,27 @@
+#!/bin/zsh
+QUERIES=(
+  fb_proc_open
+  fb_proc_summary
+  get_nr_plocks
+  get_nr_blocks
+  perf_inc_nr_plocks
+  perf_inc_nr_blocks
+  perf_inc_nr_gc_trigger_fg
+  perf_inc_nr_lsb_pg_backup
+  get_nr_incomming_write
+  get_nr_wordline_prog_fg
+  file_open
+  file_open_read
+  file_close
+  file_sync
+  proc_read_summary
+)
+
+RESULT=''
+for QUERY in $QUERIES; do
+  NUM=$(rg -wtc "$QUERY" $@ | wc -l)
+  if (( NUM <= 2 )); then
+    RESULT="$QUERY\\|$RESULT"
+  fi
+done
+echo '\<\('"$RESULT[0,-3]"'\)\>'
