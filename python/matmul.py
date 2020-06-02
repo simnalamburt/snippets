@@ -17,11 +17,11 @@ print(
     )
 )
 print()
-result = sum(
+result = [
     sum(
         a*b for (a, b) in
         zip(range(start*16, start*16 + 16), range(256, 272))
     )
     for start in range(16)
-)
+]
 print(result)
