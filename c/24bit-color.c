@@ -50,8 +50,8 @@ int main() {
       for (int b = 0; b < 6*5*2; b += 2) {
         int R = 256 * r / 6;
         int G = 256 * g / 18;
-        int B0 = 256 * b / 48;
-        int B1 = 256 * (b+1) / 48;
+        int B0 = 256 * b / 60;
+        int B1 = 256 * (b+1) / 60;
         printf("\x1b[38;2;%d;%d;%d;48;2;%d;%d;%dm%s", R, G, B0, R, G, B1, LEFT_HALF);
         printf("");
       }
