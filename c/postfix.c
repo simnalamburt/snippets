@@ -1,3 +1,8 @@
+// All rights reserved by @smallcuteGPA, 2020
+//
+// Reference:
+//   https://twitter.com/smallcuteGPA/status/1315571103964696576
+
 #include<stdio.h>
 #include<stdlib.h>
 #define STACK_MAX 1000
