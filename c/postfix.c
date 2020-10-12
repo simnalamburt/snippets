@@ -1,8 +1,10 @@
 #include<stdio.h>
+#include<stdlib.h>
 #define STACK_MAX 1000
 
 int top;
 char expr[STACK_MAX];
+int stack[STACK_MAX];
 typedef enum {
     lparen,
     rparen,
@@ -11,7 +13,7 @@ typedef enum {
     times,
     divide,
     mod,
-    eos,
+    eos = '\0',
     operand
 }precedence;
 
@@ -24,12 +26,8 @@ int pop();
 int main() {
     int i = 0;
     printf("수식 입력 : ");
-    scanf_s("%s", expr);
-    while (expr[i] != eos)
-    {
-        printf("%c", expr[i]);
-        i++;
-    }
+    scanf("%s", expr);
+    // 혹은 scanf_s("%s", expr, STACK_MAX);
     printf("%d\n", eval());
 
     return 0;
@@ -40,7 +38,7 @@ int eval(void) {
     char symbol;
     int op1, op2;
     int n = 0;
-    int top = -1;
+    top = -1;
     token = getToken(&symbol, &n);
 
     while (token != eos)
@@ -83,7 +81,7 @@ precedence getToken(char* symbol, int* n) {
     case '/': return divide;
     case '*': return times;
     case '%': return mod;
-    case ' ': return eos;
+    case '\0': return eos;
     default: return operand;
     }
 }
@@ -91,11 +89,12 @@ precedence getToken(char* symbol, int* n) {
 void push(int value) {
     if (top == STACK_MAX - 1)
     {
-        printf("스택에 데이터가 가득 찾습니다.\n");
-        return;
+        printf("스택에 데이터가 가득 찼습니다.\n");
+        // NOTE: 더이상 정상적인 실행이 불가능함, 종료
+        exit(1);
     }
 
-    expr[top + 1] = value;
+    stack[top + 1] = value;
     top++;
 }
 
@@ -103,9 +102,10 @@ int pop() {
     if (top == - 1)
     {
         printf("스택이 비었습니다.\n");
-        return;
+        // NOTE: 더이상 정상적인 실행이 불가능함, 종료
+        exit(1);
     }
     top--;
-    return expr[top+1];
+    return stack[top+1];
 }
 // vim: ts=4 sw=4 sts=4
