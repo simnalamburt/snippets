@@ -1,3 +1,5 @@
+// NOTE: `typeof` is a compiler extension
+
 #include <stdio.h>
 
 // Anonimous union in return type
