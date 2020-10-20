@@ -31,5 +31,10 @@ int main() {
   // Storing returned anonoymous union
   typeof(getPI()) another = getPI();
 
+  // TODO: If C supports this, anonymous union is first class citizen in C
+  //
+  // Can't compare two anonymous union
+  // another == getPI();
+
   printf("%x\n", var.binary);
 }
