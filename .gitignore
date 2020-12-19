@@ -28,3 +28,6 @@ nimcache
 # Idris
 /idris/*
 !/idris/*.idr
+
+# Scala editor plugins
+/.metals/
