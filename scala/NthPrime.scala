@@ -2,14 +2,16 @@ object NthPrime {
   private def is_prime(number: Int): Boolean = {
     @annotation.tailrec
     def impl(i: Int): Boolean = {
-      if (i*i > number) {
-        true
-      } else {
-        if (number % i == 0) {
-          false
-        } else {
+      if (!(i*i > number)) {
+
+        if (!(number % i == 0)) {
           impl(i + 1)
+        } else {
+          false
         }
+
+      } else {
+        true
       }
     }
 
@@ -30,14 +32,14 @@ object NthPrime {
   def nthprime(n: Int): Int = {
     @annotation.tailrec
     def impl(i: Int, count: Int): Int = {
-      if (is_prime(i)) {
-        if (count + 1 == n) {
-          i
-        } else {
-          impl(i + 1, count + 1)
-        }
-      } else {
+      if (!(is_prime(i))) {
         impl(i + 1, count)
+      } else {
+        if (!(count + 1 == n)) {
+          impl(i + 1, count + 1)
+        } else {
+          i
+        }
       }
     }
 
