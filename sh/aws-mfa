@@ -8,10 +8,12 @@ MFA 인증이 완료된 AWS CLI 액세스 토큰을 얻어와주는 유틸리티
 
 Usage:
   aws-mfa [<source-profile>] [<destination-profile>] [<token-arn>]
+  aws-mfa [-h|--help]
 
   <source-profile>        이 프로필을 사용해 MFA 로그인을 합니다. (기본값: "default")
   <destination-profile>   MFA 로그인 결과를 이 프로필에 저장합니다. (기본값: "<source-profile>-mfa")
   <token-arn>             MFA 인증을 할 virtual MFA device의 ARN입니다. (기본값: 첫번째 virtual MFA device의 ARN)
+  -h, --help              이 도움말을 표시합니다
 
 Example:
   aws-mfa
@@ -24,6 +26,11 @@ EOF
 if [[ "$#" != '0' && "$#" != '1' && "$#" != '2' && "$#" != '3' ]]; then
   help
   exit 1
+fi
+
+if [[ "${1:-}" == '-h' || "${1:-}" == '--help' ]]; then
+  help
+  exit
 fi
 
 
