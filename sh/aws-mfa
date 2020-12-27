@@ -7,21 +7,36 @@ aws-mfa
 MFA 인증이 완료된 AWS CLI 액세스 토큰을 얻어와주는 유틸리티입니다.
 
 Usage:
-  aws-mfa <token-arn> <source-profile> <destination-profile>
+  aws-mfa [<source-profile>] [<destination-profile>] [<token-arn>]
+
+  <source-profile>        이 프로필을 사용해 MFA 로그인을 합니다. (기본값: "default")
+  <destination-profile>   MFA 로그인 결과를 이 프로필에 저장합니다. (기본값: "<source-profile>-mfa")
+  <token-arn>             MFA 인증을 할 virtual MFA device의 ARN입니다. (기본값: 첫번째 virtual MFA device의 ARN)
 
 Example:
-  aws-mfa arn:aws:iam::302617221463:mfa/simnalamburt femiwiki femiwiki-mfa
+  aws-mfa
+  aws-mfa myprofile
+  aws-mfa myprofile mfa-myprofile
+  aws-mfa myprofile mfa-myprofile arn:aws:iam::012345678901:mfa/simnalamburt
 EOF
 }
 
-if [[ "$#" != '3' ]]; then
+if [[ "$#" != '0' && "$#" != '1' && "$#" != '2' && "$#" != '3' ]]; then
   help
   exit 1
 fi
 
-SERIAL_NUMBER="${1}"
-PROFILE_SRC="${2}"
-PROFILE_DST="${3}"
+
+unset AWS_PROFILE
+unset AWS_DEFAULT_PROFILE
+
+
+PROFILE_SRC="${1:-default}"
+PROFILE_DST="${2:-"${PROFILE_SRC}-mfa"}"
+SERIAL_NUMBER="${3:-"$(aws iam list-mfa-devices \
+  --query 'MFADevices[].SerialNumber | [0]' \
+  --profile "${PROFILE_SRC}" \
+  --output text)"}"
 
 
 #
@@ -37,10 +52,6 @@ if [[ -n ${ABSENT+x} ]]; then
   echo "프로그램 '$ABSENT'가 설치되어있지 않습니다."
   exit 1
 fi
-
-
-unset AWS_PROFILE
-unset AWS_DEFAULT_PROFILE
 
 
 #
