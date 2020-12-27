@@ -42,7 +42,7 @@ SERIAL_NUMBER="${3:-"$(aws iam list-mfa-devices \
 #
 # 종속성 확인
 #
-for DEP in python aws; do
+for DEP in python3 aws; do
   if ! command -v "$DEP" >/dev/null 2>&1; then
     ABSENT=$DEP
     break
@@ -59,13 +59,19 @@ fi
 #
 EXPIRATION=$(aws configure get "profile.${PROFILE_DST}.expiration" || true)
 # 새 토큰을 발급받아야 하는 상황에서만 1을 반환하는 스크립트
-if python <<-EOF; then echo '이미 유효한 토큰이 발급되어있어 아무것도 하지 않았습니다.' && exit; fi
-# coding: utf-8
+if python3 <<-EOF; then echo '이미 유효한 토큰이 발급되어있어 아무것도 하지 않았습니다.' && exit; fi
 from sys import exit
-from datetime import datetime as dt
+from datetime import datetime, timezone
 
 expr = '${EXPIRATION}'
-exit(1 if (not expr) or dt.strptime(expr, '%Y-%m-%dT%H:%M:%SZ') <= dt.utcnow() else 0)
+if not expr:
+    exit(1)
+time = (
+    datetime.strptime(expr, '%Y-%m-%dT%H:%M:%S%z')
+    if expr[-1] != 'Z' else
+    datetime.strptime(expr, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)
+)
+exit(1 if time <= datetime.now(timezone.utc) else 0)
 EOF
 
 
@@ -86,15 +92,15 @@ JSON=$(
     --profile "${PROFILE_SRC}"
 )
 aws configure set "profile.${PROFILE_DST}.aws_access_key_id" \
-  "$(<<< "$JSON" python -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["AccessKeyId"])')" \
+  "$(<<< "$JSON" python3 -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["AccessKeyId"])')" \
   --profile "${PROFILE_SRC}"
 aws configure set "profile.${PROFILE_DST}.aws_secret_access_key" \
-  "$(<<< "$JSON" python -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["SecretAccessKey"])')" \
+  "$(<<< "$JSON" python3 -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["SecretAccessKey"])')" \
   --profile "${PROFILE_SRC}"
 aws configure set "profile.${PROFILE_DST}.aws_session_token" \
-  "$(<<< "$JSON" python -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["SessionToken"])')" \
+  "$(<<< "$JSON" python3 -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["SessionToken"])')" \
   --profile "${PROFILE_SRC}"
 aws configure set "profile.${PROFILE_DST}.expiration" \
-  "$(<<< "$JSON" python -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["Expiration"])')" \
+  "$(<<< "$JSON" python3 -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["Expiration"])')" \
   --profile "${PROFILE_SRC}"
 echo '토큰 갱신이 완료되었습니다.'
