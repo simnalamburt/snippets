@@ -1,19 +1,22 @@
 #!/bin/bash
+# TODO: By rewriting it in Rust, I can make it a single binary utility with no
+# dependencies required.
+
 set -euo pipefail; IFS=$'\n\t'
 
 help () {
   cat <<-'EOF'
 aws-mfa
-MFA 인증이 완료된 AWS CLI 액세스 토큰을 얻어와주는 유틸리티입니다.
+A utility that obtains an AWS CLI access token that has been MFAed.
 
 Usage:
   aws-mfa [<source-profile>] [<destination-profile>] [<token-arn>]
   aws-mfa [-h|--help]
 
-  <source-profile>        이 프로필을 사용해 MFA 로그인을 합니다. (기본값: "default")
-  <destination-profile>   MFA 로그인 결과를 이 프로필에 저장합니다. (기본값: "<source-profile>-mfa")
-  <token-arn>             MFA 인증을 할 virtual MFA device의 ARN입니다. (기본값: 첫번째 virtual MFA device의 ARN)
-  -h, --help              이 도움말을 표시합니다
+  <source-profile>        aws-mfa performs MFA using this profile. (default: "default")
+  <destination-profile>   Result of MFA will be stored into this profile. (default: "<source-profile>-mfa")
+  <token-arn>             ARN of virtual MFA device to authenticate. (default: ARN of first virtual MFA device)
+  -h, --help              Display this help message
 
 Example:
   aws-mfa
@@ -35,7 +38,7 @@ fi
 
 
 #
-# 종속성 확인
+# Check dependencies
 #
 for DEP in python3 aws; do
   if ! command -v "$DEP" >/dev/null 2>&1; then
@@ -44,7 +47,7 @@ for DEP in python3 aws; do
   fi
 done
 if [[ -n ${ABSENT+x} ]]; then
-  echo "프로그램 '$ABSENT'가 설치되어있지 않습니다."
+  echo "'$ABSENT' is not installed."
   exit 1
 fi
 
@@ -65,11 +68,11 @@ SERIAL_NUMBER="${3:-"$(aws iam list-mfa-devices \
 
 
 #
-# 기존 토큰 만료 여부 확인
+# Check if existing token is still valid
 #
 EXPIRATION=$(aws configure get "profile.${PROFILE_DST}.expiration" || true)
-# 새 토큰을 발급받아야 하는 상황에서만 1을 반환하는 스크립트
-if python3 <<-EOF; then echo '이미 유효한 토큰이 발급되어있어 아무것도 하지 않았습니다.' && exit; fi
+# A script that returns 1 only when a new token needs to be issued.
+if python3 <<-EOF; then echo 'Nothing was done because a valid token was already issued.' && exit; fi
 from sys import exit
 from datetime import datetime, timezone
 
@@ -86,13 +89,13 @@ EOF
 
 
 #
-# OTP 코드 입력받음
+# Receive OTP codes
 #
-read -p 'AWS 토큰 숫자 여섯자리를 입력하세요: ' -r TOKEN_CODE
+read -p 'Please enter 6 digits of OTP number: ' -r TOKEN_CODE
 
 
 #
-# 발급받은 액세스토큰 저장
+# Store issued access token
 #
 JSON=$(
   aws sts get-session-token \
@@ -113,4 +116,4 @@ aws configure set "profile.${PROFILE_DST}.aws_session_token" \
 aws configure set "profile.${PROFILE_DST}.expiration" \
   "$(<<< "$JSON" python3 -c 'import sys,json;print(json.loads(sys.stdin.read())["Credentials"]["Expiration"])')" \
   --profile "${PROFILE_SRC}"
-echo '토큰 갱신이 완료되었습니다.'
+echo 'Token renewal is complete.'
