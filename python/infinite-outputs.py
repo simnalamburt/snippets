@@ -2,8 +2,7 @@ import signal
 import time
 import itertools
 
-# Ignore Ctrl-C
-signal.signal(signal.SIGINT, lambda sig, frame: ...)
+signal.signal(signal.SIGINT, lambda sig, frame: exit(0))
 
 try:
     for i in itertools.count():
