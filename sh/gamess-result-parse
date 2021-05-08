@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail; IFS=$'\n\t'
+for FILE in ${1}/*; do
+  ENERGY=$(rg '                       TOTAL ENERGY = *(.*)$' -r '$1' "${FILE}")
+  printf '%s,%s\n' "${FILE##*/}" "${ENERGY}"
+done
