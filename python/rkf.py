@@ -1,6 +1,6 @@
 from decimal import Decimal
 from collections.abc import Callable
-from typing import TypeVar, Union
+from typing import Union
 
 Number = Union[float, Decimal]
 
