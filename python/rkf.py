@@ -1,10 +1,14 @@
+from decimal import Decimal
 from collections.abc import Callable
+from typing import TypeVar, Union
+
+Number = Union[float, Decimal]
 
 def euler(
-    f: Callable[[float, float], float],
-    init: tuple[float, float],
-    h: float, n: int,
-) -> float:
+    f: Callable[[Number, Number], Number],
+    init: tuple[Number, Number],
+    h: Number, n: int,
+) -> Number:
     x0, y = init
     for i in range(n):
         x = x0 * i*h
@@ -13,10 +17,10 @@ def euler(
     return y
 
 def improved_euler(
-    f: Callable[[float, float], float],
-    init: tuple[float, float],
-    h: float, n: int,
-) -> float:
+    f: Callable[[Number, Number], Number],
+    init: tuple[Number, Number],
+    h: Number, n: int,
+) -> Number:
     x0, y = init
     for i in range(n):
         x = x0 + i*h
@@ -26,10 +30,10 @@ def improved_euler(
     return y
 
 def rk(
-    f: Callable[[float, float], float],
-    init: tuple[float, float],
-    h: float, n: int,
-) -> float:
+    f: Callable[[Number, Number], Number],
+    init: tuple[Number, Number],
+    h: Number, n: int,
+) -> Number:
     x0, y = init
     for i in range(n):
         x = x0 + i*h
@@ -41,10 +45,10 @@ def rk(
     return y
 
 def rkf(
-    f: Callable[[float, float], float],
-    init: tuple[float, float],
-    h: float, n: int,
-) -> float:
+    f: Callable[[Number, Number], Number],
+    init: tuple[Number, Number],
+    h: Number, n: int,
+) -> Number:
     x0, y = init
     for i in range(n):
         x = x0 + i*h
