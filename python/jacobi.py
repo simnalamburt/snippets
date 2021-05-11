@@ -26,6 +26,5 @@ U = np.array([0., 0., 0., 0.])
 print(f'U = {U}')
 
 for _ in range(20):
-    V = A@U + B
-    U = A@V + B
+    U = A@U + B
     print(f'U = {U}')
