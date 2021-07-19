@@ -1,13 +1,3 @@
-//
-// $ g++ -std=c++14 auto.cpp
-// $ ./a.out
-// void (*)(int, int)
-//
-// $ clang++ -std=c++14 auto.cpp
-// $ ./a.out
-// void (*)(int, int)
-//
-
 #include <iostream>
 #include <typeinfo>
 #include <string>
@@ -44,17 +34,12 @@ constexpr slice type_name() {
   return { begin, end - begin - 1 };
 }
 
-
-//
-// Entry point
-//
-void foo(int a, int b) { }
 int main() {
-  constexpr const auto constant { "숫자를 입력해보세요 : " };
-  constexpr auto less_constant { "숫자를 입력해보세요 : " };
-  auto boo = foo;
-
-  cout << type_name<decltype(constant)>() << endl;
-  cout << type_name<decltype(less_constant)>() << endl;
-  cout << type_name<decltype(boo)>() << endl;
+  //
+  // 아래 위치에 타입을 알고싶은 표현식을 쓰시면 됩니다
+  //
+  //                         vvvvvv
+  cout << type_name<decltype(2 / 3)>() << endl;
+  cout << type_name<decltype(2 / 3.0f)>() << endl;
+  cout << type_name<decltype(1 + 2i)>() << endl;
 }
