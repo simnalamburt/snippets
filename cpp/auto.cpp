@@ -37,9 +37,8 @@ constexpr slice type_name() {
 int main() {
   //
   // 아래 위치에 타입을 알고싶은 표현식을 쓰시면 됩니다
-  //
-  //                         vvvvvv
-  cout << type_name<decltype(2 / 3)>() << endl;
-  cout << type_name<decltype(2 / 3.0f)>() << endl;
-  cout << type_name<decltype(1 + 2i)>() << endl;
+  //                          vvvvvvvv
+  cout << type_name<decltype( 2 / 3    )>() << endl;
+  cout << type_name<decltype( 2 / 3.0f )>() << endl;
+  cout << type_name<decltype( 1 + 2i   )>() << endl;
 }
