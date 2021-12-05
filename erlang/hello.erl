@@ -1,5 +1,5 @@
 -module(hello).
--compile(export_all).
+-export([hello/0]).
 
 hello() ->
   io:format("~s~n", ["Hello world!"]).
