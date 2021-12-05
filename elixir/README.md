@@ -3,7 +3,7 @@ Elixir
 
 ```bash
 # Run without build
-elixir hello.ex
+elixir hello.exs
 
 # Compile
 elixirc hello_module.ex
