@@ -18,7 +18,7 @@ notifications:
   irc:
     nick: obj-rs
     channels:
-      - irc.uriirc.org:16667#hyeon
+      - irc.libera.chat:6697#test
     template:
       - "#%{build_number} %{result}, %{build_url}"
     skip_join: true
