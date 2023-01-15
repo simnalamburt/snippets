@@ -2,13 +2,12 @@ use sliding_puzzle::*;
 
 fn main() -> Result<(), PuzzleError> {
     let puzzle = Puzzle::from_id(410325678)?;
-    dbg!(dfs(puzzle));
+    // TODO: Check if solvable
     dbg!(bfs(puzzle));
     Ok(())
 }
 
 mod sliding_puzzle {
-    use std::collections::{HashSet, VecDeque};
     use std::fmt::{Debug, Formatter};
     use std::hash::{Hash, Hasher};
 
@@ -92,20 +91,23 @@ mod sliding_puzzle {
             sum
         }
 
-        /// Returns the 4bits unsigned integer `0bUDLR` which represents possible next moves of empty
-        /// tile. `U` is up, `D` is down, `L` is left, and `R` is right.
-        fn next_moves(&self) -> u8 {
-            match self.pos {
-                0 => 0b0101,
-                1 => 0b0111,
-                2 => 0b0110,
-                3 => 0b1101,
-                4 => 0b1111,
-                5 => 0b1110,
-                6 => 0b1001,
-                7 => 0b1011,
-                8 => 0b1010,
+        /// Returns the possible moves of the puzzle.
+        fn next_moves(&self) -> NextMoves {
+            let state = match self.pos {
+                0 => 0b01010000,
+                1 => 0b01110000,
+                2 => 0b01100000,
+                3 => 0b11010000,
+                4 => 0b11110000,
+                5 => 0b11100000,
+                6 => 0b10010000,
+                7 => 0b10110000,
+                8 => 0b10100000,
                 _ => unreachable!(),
+            };
+            NextMoves {
+                state,
+                puzzle: self,
             }
         }
 
@@ -168,7 +170,7 @@ mod sliding_puzzle {
 
     impl Debug for Puzzle {
         fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
-            write!(f, "Puzzle({})", self.id())?;
+            write!(f, "Puzzle({:09})", self.id())?;
             Ok(())
         }
     }
@@ -179,71 +181,73 @@ mod sliding_puzzle {
         }
     }
 
-    pub fn dfs(puzzle: Puzzle) -> Option<u64> {
-        let mut visited = HashSet::new();
-        let mut stack = Vec::new();
-        stack.push((puzzle, 0));
-
-        while let Some((puzzle, dist)) = stack.pop() {
-            // Check if the puzzle is solved.
-            if puzzle.is_solved() {
-                return Some(dist);
-            }
-
-            // Check if the puzzle is already visited.
-            if visited.contains(&puzzle) {
-                continue;
-            }
-            visited.insert(puzzle);
-
-            // Push next states to the stack.
-            let moves = puzzle.next_moves();
-            if moves & 0b1000 != 0 {
-                stack.push((puzzle.up(), dist + 1));
-            }
-            if moves & 0b0100 != 0 {
-                stack.push((puzzle.down(), dist + 1));
-            }
-            if moves & 0b0010 != 0 {
-                stack.push((puzzle.left(), dist + 1));
-            }
-            if moves & 0b0001 != 0 {
-                stack.push((puzzle.right(), dist + 1));
-            }
-        }
-        None
+    #[derive(Clone, Copy, Debug)]
+    pub enum Direction {
+        Up,
+        Down,
+        Left,
+        Right,
     }
 
-    pub fn bfs(puzzle: Puzzle) -> Option<u64> {
-        let mut visited = HashSet::new();
-        let mut queue = VecDeque::new();
-        queue.push_back((puzzle, 0));
+    struct NextMoves<'a> {
+        /// 8bits unsigned integer `0bUDLRNNNN` which represents possible next moves of empty tile.
+        /// `U` is up, `D` is down, `L` is left, and `R` is right. `NNNN` is the number of current
+        /// iteration.
+        state: u8,
+        puzzle: &'a Puzzle,
+    }
 
-        while let Some((puzzle, dist)) = queue.pop_front() {
+    impl Iterator for NextMoves<'_> {
+        type Item = (Puzzle, Direction);
+
+        fn next(&mut self) -> Option<Self::Item> {
+            let moves = self.state & 0b11110000;
+            for n in (self.state & 0b00001111)..4 {
+                self.state += 1;
+
+                if moves & (0b10000000 >> n) != 0 {
+                    return match n {
+                        0 => Some((self.puzzle.up(), Direction::Up)),
+                        1 => Some((self.puzzle.down(), Direction::Down)),
+                        2 => Some((self.puzzle.left(), Direction::Left)),
+                        3 => Some((self.puzzle.right(), Direction::Right)),
+                        _ => unreachable!(),
+                    };
+                }
+            }
+            None
+        }
+    }
+
+    pub fn bfs(puzzle: Puzzle) -> Option<Vec<Direction>> {
+        use std::collections::hash_map::{Entry, HashMap};
+        use std::collections::VecDeque;
+
+        let mut visited: HashMap<Puzzle, Option<(Puzzle, Direction)>> = HashMap::new();
+        let mut q: VecDeque<(Puzzle, Option<(Puzzle, Direction)>)> = VecDeque::from([(puzzle, None)]);
+        while let Some((puzzle, previous)) = q.pop_front() {
+            // Check if the puzzle is already visited.
+            match visited.entry(puzzle) {
+                Entry::Occupied(_) => continue,
+                Entry::Vacant(e) => e.insert(previous),
+            };
+
             // Check if the puzzle is solved.
             if puzzle.is_solved() {
-                return Some(dist);
+                let mut cursor = puzzle;
+                let mut path = Vec::new();
+
+                while let Some((prev, direction)) = visited[&cursor] {
+                    path.push(direction);
+                    cursor = prev;
+                }
+                path.reverse();
+                return Some(path);
             }
 
-            // Check if the puzzle is already visited.
-            if visited.contains(&puzzle) {
-                continue;
-            }
-            visited.insert(puzzle);
-
-            // Push next states to the queue.
-            let moves = puzzle.next_moves();
-            if moves & 0b1000 != 0 {
-                queue.push_back((puzzle.up(), dist + 1));
-            }
-            if moves & 0b0100 != 0 {
-                queue.push_back((puzzle.down(), dist + 1));
-            }
-            if moves & 0b0010 != 0 {
-                queue.push_back((puzzle.left(), dist + 1));
-            }
-            if moves & 0b0001 != 0 {
-                queue.push_back((puzzle.right(), dist + 1));
+            // Push next states to the q.
+            for (next, direction) in puzzle.next_moves() {
+                q.push_back((next, Some((puzzle, direction))));
             }
         }
         None
