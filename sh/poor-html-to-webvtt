@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+from json import loads
+# Poorman's HTML-to-WebVTT converter
+
+# JSON has been extracted with following js:
+#
+#     copy(JSON.stringify([...document.querySelectorAll('body > div')].map(x => [Number(x.dataset.begin), Number(x.dataset.end)])))
+timings = loads(open('tmp/4.json').read())
+
+# English text has been extracted with following js:
+#
+#     copy([...document.querySelectorAll('body > div')].map(x => x.textContent).join('\n\n'))
+en = open('tmp/4.en').read().split('\n\n')
+
+# Korean text has been translated with DeepL
+ko = open('tmp/4.ko').read().split('\n\n')
+
+def fmt(time: float) -> str:
+    sec_total = int(time)
+    micro = int((time - sec_total)*1000)
+    sec = sec_total % 60
+    min = sec_total // 60
+    return f'{min:02}:{sec:02}.{micro:03}'
+
+print('WEBVTT\n')
+print('\n\n'.join(
+    f'{fmt(begin)} --> {fmt(end)}\n<lang ko>{ko}</lang>\n<lang en>{en}</lang>'
+    for (begin, end), ko, en
+    in zip(timings, ko, en)
+))
