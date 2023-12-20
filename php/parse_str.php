@@ -41,3 +41,9 @@ print_r($output); echo "\n";
 // ill input
 parse_str("yo;lo&foo  =   bar%ZZ&yolo + = + swag", $output);
 print_r($output); echo "\n";
+
+parse_str("arr[]=A&arr[]=B&arr[9]=C&arr[]=D&arr[foo]=E&arr[]=F&arr[15.1]=G&arr[]=H", $output);
+print_r($output); echo "\n";
+
+parse_str("=123&[]=123&[foo]=123&[3][var]=123", $output);
+print_r($output); echo "\n";
