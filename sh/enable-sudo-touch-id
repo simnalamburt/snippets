@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euo pipefail; IFS=$'\n\t'
+
+cat <<< 'auth sufficient pam_tid.so' | sudo tee -a /etc/pam.d/sudo_local
