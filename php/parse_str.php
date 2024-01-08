@@ -42,3 +42,5 @@ t("arr[2][]=sid&arr[][4]=fred");
 t("arr[2][]=sid&arr[][]=fred");
 t("2=222&3.14=3.14&arr[123]=asdf&arr[3.14]=asdf");
 t("foo&arr[]&arr[]&arr[]=val");
+t("foo[03]=yo");
+t("foo[-3]=yo");
