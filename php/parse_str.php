@@ -42,5 +42,32 @@ t("arr[2][]=sid&arr[][4]=fred");
 t("arr[2][]=sid&arr[][]=fred");
 t("2=222&3.14=3.14&arr[123]=asdf&arr[3.14]=asdf");
 t("foo&arr[]&arr[]&arr[]=val");
+t("foo[0]=yo");
+t("foo[00]=yo");
+t("foo[-0]=yo");
+t("foo[+0]=yo");
+t("foo[3]=yo");
 t("foo[03]=yo");
 t("foo[-3]=yo");
+t("foo[+3]=yo");
+t("yolo=sw %0%0%0 ag");
+t("str=string%20with%20%00%00%00%20nulls");
+
+parse_str("str=string%20with%20%00%00%00%20nulls", $output);
+$decoded = $output['str'];
+for ($i = 0; $i < strlen($decoded); $i++) {
+  echo str_pad(dechex(ord($decoded[$i])), 2, '0', STR_PAD_LEFT);
+  echo ' ';
+}
+echo "\n\n";
+
+t("foo[ 3=yo");
+// foo__3 in PHP 8.3
+// foo_ 3 in PHP 5.6
+
+t("foo[ ]=yo"); // foo[0]
+t("foo[  ]=yo"); // foo["  "]
+t("x[3]=1&x[0]=1&x[]=1&x[]=1&x[]=1&x[]=1");
+
+t("foo[-3][-3]=yo");
+t("yo;lo&foo = bar%ZZ&yolo + = + swag");
