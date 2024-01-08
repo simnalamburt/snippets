@@ -71,3 +71,4 @@ t("x[3]=1&x[0]=1&x[]=1&x[]=1&x[]=1&x[]=1");
 
 t("foo[-3][-3]=yo");
 t("yo;lo&foo = bar%ZZ&yolo + = + swag");
+t("arr[1=deedee&arr]1=deedee&&arr[3][2=wiz");
