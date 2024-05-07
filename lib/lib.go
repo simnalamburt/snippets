@@ -34,3 +34,10 @@ var (
 	SortPropertyUpdated = SortProperty{internal: 1}
 	SortPropertyPaid = SortProperty{internal: 2}
 )
+
+// 다만 이렇게 해줘도 enum이 정의된것과 같은 패키지에선 여전히 무효한 값을
+// 만들 수 있다. 따라서 이 방법은 enum을 여러 모듈이 공유할때에만 의미가 있고,
+// 한 모듈 안에서 사용할떄엔 무의미하다.
+func getInvalidSortProperty() SortProperty {
+	return SortProperty{internal: 123}
+}
