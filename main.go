@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"example.com/gotest/lib"
+	"github.com/simnalamburt/snippets/go/enum/lib"
 )
 
 // iota 방식의 enum은 무효한 값을 만들 수 있어서 타입세이프하지 않다
