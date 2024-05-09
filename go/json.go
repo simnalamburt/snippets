@@ -42,7 +42,9 @@ func (b BigDecimal) MarshalJSON() ([]byte, error) {
 
 func (b BigDecimal) String() string {
 	r := big.Rat(b)
-	// r.Denom() 를 소인수분해 하여 2와 5 이외의 인수없다는 사실을 체크
+	// 만약 분수꼴(a/b)이 아니라 소수점으로 표현하고싶으면, r.Denom() 이
+	// 2**a * 5**b 꼴인지 확인한 뒤, r.Num() 에 10**max(a,b)/r.Denom() 를 곱하고
+	// 오른쪽에서 max(a,b) 번째 위치에 소수점을 찍어주면 된다.
 	return r.RatString()
 }
 
