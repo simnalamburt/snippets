@@ -9,24 +9,22 @@ type SortProperty struct {
 	internal uint8
 }
 
-var (
-	SortPropertyStarted = SortProperty{internal: 0}
-	SortPropertyUpdated = SortProperty{internal: 1}
-	SortPropertyPaid = SortProperty{internal: 2}
-)
+func SortPropertyStarted() SortProperty { return SortProperty{internal: 0} }
+func SortPropertyUpdated() SortProperty { return SortProperty{internal: 1} }
+func SortPropertyPaid() SortProperty    { return SortProperty{internal: 2} }
 ```
 
 사용하는 쪽에서는 아래와 같이 하면 됩니다:
 
 ```go
-p := lib.SortPropertyStarted
+p := lib.SortPropertyStarted()
 
 switch p {
-case lib.SortPropertyStarted:
+case lib.SortPropertyStarted():
 	fmt.Println("Started")
-case lib.SortPropertyUpdated:
+case lib.SortPropertyUpdated():
 	fmt.Println("Updated")
-case lib.SortPropertyPaid:
+case lib.SortPropertyPaid():
 	fmt.Println("Paid")
 }
 ```
