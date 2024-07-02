@@ -1,0 +1,2 @@
+#!/bin/bash
+curl -sA 'Mozilla/5.0' 'https://open.assembly.go.kr/portal/data/sheet/downloadSheetData.do?rows=1&infId=O0JYV9001256KD10538&infSeq=1&downloadType=J&PETIT_SJ=탄핵소추안' | jq -r '.[1].AGRE_CO'
