@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail; IFS=$'\r\n'
+
+for ((i = 0; i < 100; i += 4)); do
+    echo "$((i)) $((i+1)) $((i+2)) $((i+3))"
+done
