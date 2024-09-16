@@ -5,22 +5,18 @@ KRW = int
 KRWPerShare = int
 # KRW = KRWPerShare * Share
 
-def 계산(
+
+def 스톡옵션행사이익(
     발행주식총수: Share,
     주가: KRWPerShare,
     스톡옵션교부수량: Share,
     행사가격: KRWPerShare,
-) -> None:
+) -> KRW:
     """
-    주어진 정보로 해당 시점의 시가총액과 스톡옵션행사이익을 계산합니다.
+    주어진 정보로 해당 시점의 스톡옵션행사이익을 계산합니다.
     """
-
-    시가총액: KRW = 발행주식총수 * 주가
-    스톡옵션행사이익: KRW = (주가 - 행사가격) * 스톡옵션교부수량
-
-    print(f"""\x1b[33m\
-    {시가총액         = :,} KRW
-    스톡옵션행사이익 = \x1b[1;4m{스톡옵션행사이익:,} KRW\x1b[0m""")
+    return (주가 - 행사가격) * 스톡옵션교부수량
+    # TODO: fuzzing
 
 
 def 유상증자(
