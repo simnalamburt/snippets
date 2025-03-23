@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# It requires rg(1) to be installed.
+
+set -euo pipefail; IFS=$'\n\t'
+
+echo 'Checking for text files without LF at EOF'
+
+# Lookup for a text file without LF at EOF
+EXIT_CODE=0
+rg -lU '^.+$\z' || EXIT_CODE=$?
+
+case $EXIT_CODE in
+  0)
+    echo 'Found text files without LF at EOF'
+    exit 1;;
+  1)
+    echo 'All text files have LF at EOF'
+    exit 0;;
+  *)
+    echo 'Error while checking for text files without LF at EOF'
+    exit 2;;
+esac
