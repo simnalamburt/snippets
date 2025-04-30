@@ -2,11 +2,8 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 
 fn main() {
-    let a = "Hello, World!";
-    let b = "Hello, World!".to_string();
-
-    let a = Cow::from(a);
-    let b = Cow::from(b);
+    let a = Cow::Borrowed("foo");
+    let b = Cow::Owned(String::from("foo"));
 
     dbg!(a == b);
 
