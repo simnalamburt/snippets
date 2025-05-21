@@ -1,10 +1,10 @@
 //! ```bash
-//! rustc --edition=2024 issue-113875.rs
+//! rustc +nightly --edition=2024 issue-113875-nightly.rs
 //! ```
 //!
 //! ###### References
 //! - https://github.com/rust-lang/rust/issues/113875
-
+#![feature(never_type)]
 #![allow(unreachable_code)]
 
 // Following function will not compile with the error:
@@ -21,7 +21,7 @@
 enum Never {}
 
 impl Iterator for Never {
-    type Item = Never; // Or `!` if you're using Rust nightly with #![feature(never_type)]
+    type Item = !;
     fn next(&mut self) -> Option<Self::Item> {
         match *self {}
     }
