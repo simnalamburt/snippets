@@ -16,19 +16,8 @@
 // }
 
 // Workaround:
-
-#[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Debug)]
-enum Never {}
-
-impl Iterator for Never {
-    type Item = Never; // Or `!` if you're using Rust nightly with #![feature(never_type)]
-    fn next(&mut self) -> Option<Self::Item> {
-        match *self {}
-    }
-}
-
-fn neveriter() -> Never {
-    loop {}
+fn neveriter() -> impl Iterator<Item = i32> {
+    (loop {} as Vec<i32>).into_iter()
 }
 
 fn main() {
