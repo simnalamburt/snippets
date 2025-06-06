@@ -31,3 +31,7 @@ nimcache
 
 # Scala editor plugins
 /.metals/
+
+# Typst
+/typst/fonts
+/typst/*.pdf
