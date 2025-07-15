@@ -27,3 +27,18 @@ def n(i : int) -> str:
 
     prev = n(i - 1)
     return '%s, %s}' % (prev[:-1], prev)
+
+def l(i : int) -> int:
+    """
+    l(i)  = len(n(i))
+
+    l(0)     = 2
+    l(1)     = 4
+    l(i)     = 2 * l(i-1) + 2
+
+    l(i) + 2 = 2 * (l(i-1) + 2) = 2**(i-1) * (l(1) + 2)
+
+    Conclusion:
+        lambda i: 3 * 2**i - 2 if i > 0 else 2
+    """
+    return 3 * 2**i - 2 if i > 0 else 2
