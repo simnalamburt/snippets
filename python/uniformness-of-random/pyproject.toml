@@ -9,5 +9,6 @@ dependencies = [
     "numpy>=2.3.1",
     "pandas>=2.3.1",
     "plotly[express]>=6.2.0",
+    "ruff>=0.12.4",
     "scipy>=1.16.0",
 ]
