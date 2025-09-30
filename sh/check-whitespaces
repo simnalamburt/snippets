@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Check if there are text files without LF at EOF or with trailing whitespace,
+# using only git. If git misidentifies binary files as text files, correct it
+# with .gitattributes.
+
+set -euo pipefail; IFS=$'\n\t'
+
+if git -P grep -IlP '[^\n]\z'; then
+  echo ''
+  echo 'Text files without LF at EOF found'
+  exit 1
+fi
+
+if git -P grep -En '[[:space:]]+$'; then
+  echo ''
+  echo 'Trailing whitespace found'
+  exit 1
+fi
