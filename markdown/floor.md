@@ -39,7 +39,7 @@ i <= x && x < floor(x) + 1
 
   `floor(x)`와 `i` 모두 정수이므로, `floor(x) <= i < floor(x) + 1` 를 만족하는 `i`는 `i == floor(x)` 뿐임
 
-  ```  
+  ```
   ==> i == floor(x) <= x (equality holds at x == floor(x))
   ==> i <= x (equality holds at x == floor(x))
   ```
