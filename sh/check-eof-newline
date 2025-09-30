@@ -8,7 +8,7 @@ echo 'Checking for text files without LF at EOF'
 
 # Lookup for a text file without LF at EOF
 EXIT_CODE=0
-rg -lU '^.+$\z' || EXIT_CODE=$?
+rg -Ul '[^\n]\z' || EXIT_CODE=$?
 
 case $EXIT_CODE in
   0)
