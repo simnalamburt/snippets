@@ -6,14 +6,15 @@
 
 set -euo pipefail; IFS=$'\n\t'
 
-if git -P grep -IlP '[^\n]\z'; then
-  echo ''
-  echo 'Text files without LF at EOF found'
-  exit 1
+EXIT_CODE=0
+if git -P grep -IPl '[^\n]\z'; then
+  echo -e '⚠️ Text files without LF at EOF found\n'
+  EXIT_CODE=1
 fi
 
-if git -P grep -En '[[:space:]]+$'; then
-  echo ''
-  echo 'Trailing whitespace found'
-  exit 1
+if git -P grep -IPn '[[:space:]]+$'; then
+  echo -e '⚠️ Trailing whitespace found\n'
+  EXIT_CODE=1
 fi
+
+exit "${EXIT_CODE}"
