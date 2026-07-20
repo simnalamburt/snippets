@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# nosleep
+# Keep your MacBook running when the lid is closed.
+#
+# Usage:
+#   sudo ./nosleep
+#
+set -euo pipefail; IFS=$'\n\t'
+
+if [[ ${EUID} -ne 0 ]]; then
+  echo "usage: sudo $0" >&2
+  exit 1
+fi
+
+# Setup cleanup
+cleanup() {
+  [[ -n "${CAFF_PID:-}" ]] && kill "${CAFF_PID}" 2>/dev/null || true
+  pmset -a disablesleep 0
+  echo "sleep restored"
+}
+trap cleanup EXIT
+trap 'exit 130' HUP INT TERM
+
+# Disable sleep
+pmset -a disablesleep 1
+echo "sleep disabled, Ctrl-C to restore"
+
+# Wait & caffeinate
+caffeinate -i &
+CAFF_PID=$!
+wait "${CAFF_PID}" || true
